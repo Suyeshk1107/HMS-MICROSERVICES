@@ -30,15 +30,12 @@ public class DoctorResource {
 	}
 	
 	@PostMapping(path = "/doctors", produces = MediaType.APPLICATION_JSON_VALUE)
-	public boolean saveEmployeeResource(@RequestBody Doctor doctor) {
+	public Doctor saveDoctor(@RequestBody Doctor doctor) {
 		return doctorService.addDoctor(doctor);
 	}
 	
 	@DeleteMapping(path = "/doctors/remove/{dId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public String removeDoctorById(@PathVariable("dId") String doctorId) {
-		if(doctorService.deleteDoctor(doctorId)) {
-			return "Doctor Deleted Successfully !";
-		}
-		return "Unable to delete doctor ! Please try again later.";
+	public Doctor removeDoctorById(@PathVariable("dId") String doctorId) {
+		return doctorService.deleteDoctor(doctorId);
 	}
 }
