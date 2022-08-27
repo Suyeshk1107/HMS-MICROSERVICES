@@ -21,32 +21,19 @@ public class DoctorServiceImpl implements DoctorService {
 	}
 
 	@Override
-	public boolean addDoctor(Doctor doctor) {
-		Doctor doctor2 = new Doctor();
-		doctor2.setDoctorId(setDoctorId());
-		doctor2.setDoctorName(doctor.getDoctorName());
-		doctor2.setDoctorGender(doctor.getDoctorGender());
-		doctor2.setDoctorAge(doctor.getDoctorAge());
-		doctor2.setDoctorAddress(doctor.getDoctorAddress());
-		doctor2.setDoctorContact(doctor.getDoctorContact());
-		doctor2.setDoctorDepartment(doctor.getDoctorDepartment());
-		doctor2.setDoctorExperience(doctor.getDoctorExperience());
-		
-		if(doctorDao.save(doctor2) != null)
-			return true;
-		else
-			return false;
+	public Doctor addDoctor(Doctor doctor) {
+		doctor.setDoctorId(setDoctorId());		
+		return doctorDao.save(doctor);
 	}
 
 	@Override
-	public boolean deleteDoctor(String doctorId) {
-		Doctor doctor = getDoctorById(doctorId);
-		if(doctor != null) {
+	public Doctor deleteDoctor(String doctorId) {
+		Optional<Doctor> docOptional=doctorDao.findById(doctorId);
+		if(docOptional.isPresent()) {
 			doctorDao.deleteById(doctorId);
-			return true;
+			return docOptional.get();
 		}
-		else
-			return false;
+		return new Doctor();
 	}
 
 	@Override

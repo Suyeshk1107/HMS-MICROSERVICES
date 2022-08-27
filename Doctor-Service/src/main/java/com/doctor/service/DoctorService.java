@@ -8,9 +8,9 @@ public interface DoctorService {
 	
 	List<Doctor> getAllDoctor();
 	
-	boolean addDoctor(Doctor doctor);
+	Doctor addDoctor(Doctor doctor);
 	
-	boolean deleteDoctor(String doctorId);
+	Doctor deleteDoctor(String doctorId);
 
 	Doctor getDoctorById(String doctorId);
 	
