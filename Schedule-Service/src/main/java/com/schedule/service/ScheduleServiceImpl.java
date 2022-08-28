@@ -26,12 +26,13 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 
 	@Override
-	public Boolean deleteScheduleByDoctorId(String doctorId) {
-		// TODO Auto-generated method stub
-		scheduleDao.deleteScheduleByDoctorId(doctorId);
-		if(getScheduleByIdDoctorId(doctorId) != null)
-			return false;
-		return true;
+	public Schedule deleteScheduleByDoctorId(String doctorId) {
+		Schedule schedule=scheduleDao.findByDoctorId(doctorId);
+		if(schedule != null) {
+			scheduleDao.deleteScheduleByDoctorId(doctorId);
+			return schedule;
+		}
+		return new Schedule();
 	}
 
 	@Override
