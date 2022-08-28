@@ -1,16 +1,16 @@
 package com.bean;
 
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Login{
+@NoArgsConstructor
+public class ScheduleList {
 	
-	private String id;
-	private String password;
-//	private String databaseType
+	private List<Schedule> scheduleList;
+
 }
