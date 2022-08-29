@@ -1,0 +1,1 @@
+1. null pointer exceptions not handled yet - in all appointments

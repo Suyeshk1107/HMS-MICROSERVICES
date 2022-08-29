@@ -20,6 +20,7 @@ import com.bean.Schedule;
 import com.bean.ScheduleList;
 import com.service.AppointmentService;
 import com.service.DoctorService;
+import com.service.HmsClientService;
 import com.service.PatientService;
 import com.service.ScheduleService;
 
@@ -29,11 +30,11 @@ public class PatientController {
 	@Autowired
 	private PatientService patientService;
 	@Autowired
-	private DoctorService doctorService;
-	@Autowired
 	private AppointmentService appointmentService;
 	@Autowired
 	private ScheduleService scheduleService;
+	@Autowired
+	private HmsClientService hmsClientService;
 	
 //	 Patient Functionalities --------------------------------------------------------------------------------------------------------------------
 	
@@ -105,9 +106,10 @@ public class PatientController {
 		appointment.setDoctorId(schedule.getDoctorId());
 		appointment.setDate((Date)session.getAttribute("date"));
 		
-		Appointment appointments = appointmentService.addAppointment(appointment);
-		if(appointments != null) {
-			modelAndView.addObject( "myAppointmentList", appointments);
+//		Appointment appointments = appointmentService.addAppointment(appointment); //changing code here
+		if(hmsClientService.requestAppointment(appointment)) {
+			Appointment bookedAppointment = appointmentService.showLatestAppointment();
+			modelAndView.addObject( "myAppointmentList", bookedAppointment);
 			modelAndView.setViewName("ShowMyAppointments");
 		}
 		else {
@@ -127,11 +129,11 @@ public class PatientController {
 		ModelAndView modelAndView = new ModelAndView();
 		
 		String userId = (String)session.getAttribute("userName");
-		AppointmentList appointments = appointmentService.showAllAppointmentsByPatientId(userId);
+		List<Appointment> appointments = hmsClientService.showAllAppointmentsByPatientId(userId);
 		
 		
-		if(appointments != null) {
-			modelAndView.addObject("appointmentList", appointments.getAppointments());
+		if(!appointments.isEmpty() ) {
+			modelAndView.addObject("appointmentList", appointments);
 			modelAndView.setViewName("cancelAppointment");
 		}
 		else {
@@ -169,12 +171,12 @@ public class PatientController {
 		ModelAndView modelAndView = new ModelAndView();
 		
 		String pId = (String) session.getAttribute("userName");
-		AppointmentList appointments = appointmentService.showAllAppointmentsByPatientId(pId);
+		List<Appointment> appointments = hmsClientService.showAllAppointmentsByPatientId(pId);
 		
 		
-//		may fail due to circuit breaker
-		if(appointments!=null) {
-			modelAndView.addObject( "myAppointmentList", appointments.getAppointments());
+//		may fail due to circuit breaker -- won't fail now
+		if(!appointments.isEmpty()) {
+			modelAndView.addObject( "myAppointmentList", appointments);
 			modelAndView.setViewName("ShowMyAppointments");
 		}
 		else {
@@ -193,10 +195,10 @@ public class PatientController {
 		ModelAndView modelAndView = new ModelAndView();
 		
 		String pId = (String) session.getAttribute("userName");
-		AppointmentList appointments = appointmentService.showAllAppointmentsByPatientId(pId);
+		List<Appointment> appointments = hmsClientService.showAllAppointmentsByPatientId(pId);
 		
 		
-		if(appointments!=null) {
+		if(!appointments.isEmpty()) {
 			modelAndView.addObject( "appointmentList", appointments);
 			modelAndView.setViewName("rescheduleAppointment");
 		}
@@ -217,17 +219,19 @@ public class PatientController {
 		int aid = Integer.parseInt(request.getParameter("appointmentId"));
 		Date appointmentDate =Date.valueOf(request.getParameter("appointmentDate"));
 		
-		// reschedule pending
-//		if(patientService.rescheduleAppointment(aid, appointmentDate)) {
-//			String message="Appointment Rescheduled successfully.";
-//			modelAndView.addObject("message", message);
-//			modelAndView.setViewName("Output");
-//		}else{
-//			String message="Couldn't reschedule Appointment. Please try again.";
-//			modelAndView.addObject("message", message);
-//			modelAndView.setViewName("Output");
-//		};
-//		
+		Appointment appointment = new Appointment();
+		appointment.setAppointmentId(aid);
+		appointment.setDate(appointmentDate);
+		if(hmsClientService.rescheduleAppointment(appointment)) {
+			String message="Appointment Rescheduled successfully.";
+			modelAndView.addObject("message", message);
+			modelAndView.setViewName("Output");
+		}else{
+			String message=" reschedule Appointment. Please try again.";
+			modelAndView.addObject("message", message);
+			modelAndView.setViewName("Output");
+		};
+		
 		return modelAndView;
 	}
 }

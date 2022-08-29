@@ -1,8 +1,13 @@
 package com.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bean.Appointment;
+import com.bean.AppointmentList;
 import com.bean.Login;
 
 
@@ -14,6 +19,8 @@ public class HmsClientServiceImpl implements HmsClientService {
 	
 	@Autowired
 	private LoginService loginService;
+	@Autowired
+	private AppointmentService appointmentService;
 
 	//	public List<MovieDetails> getMovieDetails(String userId) {
 //		List<MovieDetails> movieDetailsList=new ArrayList<MovieDetails>();
@@ -30,6 +37,7 @@ public class HmsClientServiceImpl implements HmsClientService {
 //		return movieDetailsList;
 //	}
 	
+//	login services
 	@Override
 	public boolean isValid(String id, String password) {
 		
@@ -52,6 +60,47 @@ public class HmsClientServiceImpl implements HmsClientService {
 		return false;
 	}
 	
+//	Appointment service
+	@Override
+	public List<Appointment> showAllAppointmentsByPatientId(String pId){
+		AppointmentList appointmentList = appointmentService.showAllAppointmentsByPatientId(pId);
+		String patientId = appointmentList.getAppointments().get(0).getPatientId();
+		if(patientId.equals(patientId))
+			return appointmentList.getAppointments();
+		return new ArrayList<>();
+	}
+	@Override
+	public List<Appointment> showAllAppointmentsByDoctorId(String dId){
+		AppointmentList appointmentList = appointmentService.showAllAppointmentsByDoctorId(dId);
+		String doctorId = appointmentList.getAppointments().get(0).getDoctorId();
+		if(doctorId.equals(dId))
+			return appointmentList.getAppointments();
+		return new ArrayList<>();
+	}
+	@Override
+	public List<Appointment> showAllAppointments(){
+		AppointmentList appointmentList = appointmentService.showAllAppointments();
+		int appointmentId = appointmentList.getAppointments().get(0).getAppointmentId();
+		if(appointmentId != 0)
+			return appointmentList.getAppointments();
+		return new ArrayList<>();
+	}
 	
+	@Override
+	public boolean requestAppointment(Appointment appointment) {
+		Appointment newAppointment = appointmentService.addAppointment(appointment);
+		if(newAppointment.getAppointmentId() != 0)
+			return true;
+		return false;
+	}
+	
+	@Override
+	public boolean rescheduleAppointment(Appointment appointment) {
+		Appointment newAppointment = appointmentService.modifyAppointment(appointment);
+		if(newAppointment.getAppointmentId() == appointment.getAppointmentId()) {
+			return true;
+		}
+		return false;
+	}
 	
 }
