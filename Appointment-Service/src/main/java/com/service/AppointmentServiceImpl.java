@@ -26,6 +26,15 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public List<Appointment> getAllAppointments(){
 		return appointmentDao.findAll();
 	}
+	@Override
+	public List<Appointment> getAllAppointmentsByPatientId(String pId){
+		return appointmentDao.getAllAppointmentsByPatientId(pId);
+	}
+	
+	@Override
+	public List<Appointment> getAllAppointmentsByDoctorId(String dId){
+		return appointmentDao.getAllAppointmentsByDoctorId(dId);
+	}
 	
 	@Override
 	public Appointment getAppointmentById(int id) {

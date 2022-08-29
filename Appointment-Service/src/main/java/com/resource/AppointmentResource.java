@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,6 +35,15 @@ public class AppointmentResource {
 		return appointmentService.getAppointmentById(id);
 	}
 	
+	@GetMapping(path = "/appointments/p/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public AppointmentList getAppointmentsPatientById(@PathVariable("id") String id) {
+		return new AppointmentList(appointmentService.getAllAppointmentsByPatientId(id));
+	}
+	
+	@GetMapping(path = "/appointments/d/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public AppointmentList getAppointmentsByDoctorId(@PathVariable("id") String id) {
+		return new AppointmentList(appointmentService.getAllAppointmentsByDoctorId(id));
+	}
 
 	@PostMapping(path="/appointments",produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Appointment saveAppointmentResource(@RequestBody Appointment appointment) {
@@ -45,7 +55,7 @@ public class AppointmentResource {
 		return appointmentService.deleteAppointment(id);
 	}
 	
-	@PutMapping(path = "/appointments/{id}/{date}",produces = MediaType.APPLICATION_JSON_VALUE)
+	@PatchMapping(path = "/appointments/{id}/{date}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public Appointment rescheduleAppointmentResource(@PathVariable("id") int id,@PathVariable("date")Date date) {
 		return appointmentService.modifyAppointment(id,date);
 	}

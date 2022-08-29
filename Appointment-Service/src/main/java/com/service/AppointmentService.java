@@ -16,4 +16,8 @@ public interface AppointmentService {
 	List<Appointment> getAllAppointments();
 
 	Appointment getAppointmentById(int id);
+
+	List<Appointment> getAllAppointmentsByPatientId(String pId);
+
+	List<Appointment> getAllAppointmentsByDoctorId(String dId);
 }
