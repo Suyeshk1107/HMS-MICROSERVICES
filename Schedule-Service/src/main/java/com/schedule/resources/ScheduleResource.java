@@ -31,11 +31,9 @@ public class ScheduleResource {
 		return new ScheduleList(scheduleService.getAllAvailableDoctorsSchedule(day));
 	}
 	
-	@DeleteMapping(path = "/schedules/remove/{dId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public String removeScheduleByDoctorId(@PathVariable("dId") String doctorId) {
-		if(scheduleService.deleteScheduleByDoctorId(doctorId))
-			return "Schedule for Doctor Id [ "+doctorId+" ] removed !";
-		return "Unable to remove schedule, please try again later !";
+	@DeleteMapping(path = "/schedules/{dId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Schedule removeScheduleByDoctorId(@PathVariable("dId") String doctorId) {
+		return scheduleService.deleteScheduleByDoctorId(doctorId);
 	}
 	
 	

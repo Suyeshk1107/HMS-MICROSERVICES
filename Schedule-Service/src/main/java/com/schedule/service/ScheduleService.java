@@ -10,7 +10,7 @@ public interface ScheduleService {
 	
 	Schedule getScheduleByIdDoctorId(String doctorId);
 	
-	Boolean deleteScheduleByDoctorId(String doctorId);
+	Schedule deleteScheduleByDoctorId(String doctorId);
 	
 	List<Schedule> getAllAvailableDoctorsSchedule(String day);
 	
