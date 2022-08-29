@@ -40,6 +40,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public Appointment getAppointmentById(int id) {
 		return appointmentDao.getReferenceById(id);
 	}
+	
+	@Override
+	public Appointment getLatestAppointment() {
+		return appointmentDao.findTopByOrderByAppointmentIdDesc();
+	}
 
 	@Override
 	public Appointment addAppointment(String patientId, String doctorId, Date date) {
@@ -111,15 +116,15 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
-	public Appointment modifyAppointment(int appointmentId, Date date) {
-		Optional<Appointment> appointmentOptional = appointmentDao.findById(appointmentId);
+	public Appointment modifyAppointment(Appointment appointment) {
+		Optional<Appointment> appointmentOptional = appointmentDao.findById(appointment.getAppointmentId());
 		
 		if(appointmentOptional.isPresent()) {
 			
-			int rows = appointmentDao.updateAppointmentByIdAndDate(appointmentId,date);
+			int rows = appointmentDao.updateAppointmentByIdAndDate(appointment.getAppointmentId(),appointment.getDate());
 			
 			if(rows>0) {
-				return appointmentDao.getReferenceById(appointmentId);
+				return appointmentDao.getReferenceById(appointment.getAppointmentId());
 			}
 		}
 		

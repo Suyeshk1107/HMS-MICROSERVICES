@@ -35,6 +35,12 @@ public class AppointmentResource {
 		return appointmentService.getAppointmentById(id);
 	}
 	
+	@GetMapping(path = "/appointments/latest", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Appointment getLatestAppointment() {
+		return appointmentService.getLatestAppointment();
+	}
+	
+	
 	@GetMapping(path = "/appointments/p/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public AppointmentList getAppointmentsPatientById(@PathVariable("id") String id) {
 		return new AppointmentList(appointmentService.getAllAppointmentsByPatientId(id));
@@ -55,9 +61,9 @@ public class AppointmentResource {
 		return appointmentService.deleteAppointment(id);
 	}
 	
-	@PatchMapping(path = "/appointments/{id}/{date}",produces = MediaType.APPLICATION_JSON_VALUE)
-	public Appointment rescheduleAppointmentResource(@PathVariable("id") int id,@PathVariable("date")Date date) {
-		return appointmentService.modifyAppointment(id,date);
+	@PatchMapping(path = "/appointments/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+	public Appointment rescheduleAppointmentResource(@RequestBody Appointment appointment,@PathVariable("id") int id) {
+		return appointmentService.modifyAppointment(appointment);
 	}
 	
 	
