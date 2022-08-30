@@ -1,0 +1,2 @@
+1. null pointer exceptions not handled yet - in all appointments
+2. in case of fallback, display message , couldn't reach the server, please try again after some time

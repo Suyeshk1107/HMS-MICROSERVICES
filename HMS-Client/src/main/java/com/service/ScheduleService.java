@@ -1,5 +1,6 @@
 package com.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +40,8 @@ public class ScheduleService {
 
 	
 	@CircuitBreaker(name = "availableDoctorSchedule",fallbackMethod ="showAvailableDoctorScheduleFallBack" )
-	public ScheduleList showAvailableDoctorSchedule(String day) {
-		return restTemplate.getForObject("http://schedule-service/schedules/availableDoctors/"+day, ScheduleList.class);
+	public ScheduleList showAvailableDoctorSchedule(Date date) {
+		return restTemplate.getForObject("http://schedule-service/schedules/availableDoctors/"+date, ScheduleList.class);
 	}
 	public ScheduleList showAvailableDoctorScheduleFallBack(Exception e) {
 		List<Schedule> scheduleList = new ArrayList<Schedule>();

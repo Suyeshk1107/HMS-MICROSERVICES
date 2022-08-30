@@ -25,7 +25,7 @@ public class LoginService {
 	}
 	
 	public Login getLoginFallBack(Exception e) {
-		return new Login("no user ID",null);
+		return new Login("no user ID","no password");
 	}
 	
 	

@@ -11,9 +11,15 @@ public interface AppointmentService {
 	
 	public Appointment deleteAppointment(int appoointmentId);
 	
-	public Appointment modifyAppointment(int id, Date date);
+	public Appointment modifyAppointment(Appointment appointment);
 
 	List<Appointment> getAllAppointments();
 
 	Appointment getAppointmentById(int id);
+
+	List<Appointment> getAllAppointmentsByPatientId(String pId);
+
+	List<Appointment> getAllAppointmentsByDoctorId(String dId);
+
+	Appointment getLatestAppointment();
 }
