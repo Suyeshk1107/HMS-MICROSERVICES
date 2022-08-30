@@ -44,8 +44,9 @@ public class PatientController {
 	public ModelAndView showPatientController(HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
 		
-
-		Patient patient = patientService.showPatientById((String)session.getAttribute("userName"));
+//		editing for hms
+		Patient patient = hmsClientService.getPatientById((String)session.getAttribute("userName"));
+		
 		if (patient != null) {
 			modelAndView.addObject("patient", patient);
 			modelAndView.setViewName("ShowPatient");
@@ -72,9 +73,10 @@ public class PatientController {
 		ModelAndView modelAndView = new ModelAndView();
 		Date date = Date.valueOf(request.getParameter("appointmentDate"));
 		session.setAttribute("date", date);
-		ScheduleList availableDoctorsSchedule = scheduleService.showAvailableDoctorSchedule(date);
-		if(availableDoctorsSchedule != null) {
-			modelAndView.addObject( "availableScheduleList", availableDoctorsSchedule.getScheduleList());
+//		ScheduleList availableDoctorsSchedule = scheduleService.showAvailableDoctorSchedule(date);
+		List<Schedule> availableDoctorsSchedule = hmsClientService.getAvailableDoctorSchedule(date);
+		if(availableDoctorsSchedule.isEmpty()) {
+			modelAndView.addObject( "availableScheduleList", availableDoctorsSchedule);
 			modelAndView.addObject("command3",new Schedule());
 			modelAndView.setViewName("ShowAvailableDoctorsSchedulePage");
 		}

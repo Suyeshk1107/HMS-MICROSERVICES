@@ -1,5 +1,6 @@
 package com.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Service;
 import com.bean.Appointment;
 import com.bean.AppointmentList;
 import com.bean.Login;
+import com.bean.Patient;
+import com.bean.Schedule;
+import com.bean.ScheduleList;
 
 
 @Service
@@ -21,6 +25,10 @@ public class HmsClientServiceImpl implements HmsClientService {
 	private LoginService loginService;
 	@Autowired
 	private AppointmentService appointmentService;
+	@Autowired
+	private PatientService patientService;
+	@Autowired
+	private ScheduleService scheduleService;
 
 	//	public List<MovieDetails> getMovieDetails(String userId) {
 //		List<MovieDetails> movieDetailsList=new ArrayList<MovieDetails>();
@@ -103,4 +111,36 @@ public class HmsClientServiceImpl implements HmsClientService {
 		return false;
 	}
 	
+//	patient-service
+	@Override
+	public Patient addPatientToDatabase(Patient patient) {
+		Patient newPatient = patientService.addPatient(patient);
+		if(newPatient.getPatientName().equals(patient.getPatientId())) {
+			return newPatient;
+		}
+		return null;
+	}
+	
+	@Override
+	public Patient getPatientById(String pId) {
+		Patient patient = patientService.showPatientById(pId);
+		if(patient.getPatientId().equals(patient.getPatientId())) {
+			return patient;
+		}
+		return null;
+	}
+	
+	
+//	schedule-service
+//	check service layer
+	@Override
+	public List<Schedule> getAvailableDoctorSchedule(Date date){
+		
+		ScheduleList scheduleList = scheduleService.showAvailableDoctorSchedule(date);
+		if(scheduleList.getScheduleList().get(0).getScheduleId() != 0) {
+			return scheduleList.getScheduleList();
+		}
+		
+		return new ArrayList<Schedule>();
+	}
 }

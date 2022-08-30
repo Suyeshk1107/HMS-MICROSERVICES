@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bean.Login;
 import com.bean.Patient;
 import com.service.HmsClientService;
 import com.service.LoginService;
@@ -20,6 +21,8 @@ public class ValidationController {
 	private HmsClientService hmsClientService;
 	@Autowired
 	private PatientService patientService;
+	@Autowired
+	private LoginService loginService;
 	
 	@RequestMapping("/validate")
 	public ModelAndView validationController(HttpServletRequest request,HttpSession session) {
@@ -30,6 +33,21 @@ public class ValidationController {
 
 		session.setAttribute("userName", userName);
 		
+		Login login = loginService.getLogin(userName);
+		if(login != null) {
+//			fallback
+			if(login.getId().equals(userName)) {
+				password.equals(login.getPassword()){
+//					validate
+				}else {
+//					fallback condition
+					
+				}
+			}
+			
+		}else {
+			
+		}
 		
 		 if(hmsClientService.isValid(userName, password)) {
 			 if(userName.toUpperCase().charAt(0) == 'A' ) {
@@ -38,7 +56,6 @@ public class ValidationController {
 			 }else if(userName.toUpperCase().charAt(0) == 'D' ) {
 				 modelAndView.setViewName("doctorPostLogin");
 			 }else  if(userName.toUpperCase().charAt(0) == 'P' ) {
-//				 modelAndView.addObject("");
 				 modelAndView.setViewName("patientPostLogin");
 			 }
 		}else {
@@ -68,7 +85,8 @@ public class ValidationController {
 		patient.setPatientSymptoms(request.getParameter("pSymptom"));
 		
 		String message = null;
-		Patient newPatient = patientService.addPatient(patient);
+		Patient newPatient = hmsClientService.addPatientToDatabase(patient);
+//		
 		if (newPatient != null) {
 			session.setAttribute("userName", newPatient.getPatientId());
 			
@@ -83,8 +101,6 @@ public class ValidationController {
 
 		
 	}
-		
-
 		return modelAndView;
 	}
 

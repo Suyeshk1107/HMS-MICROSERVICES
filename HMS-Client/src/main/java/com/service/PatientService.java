@@ -1,6 +1,10 @@
 package com.service;
 
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.bean.Appointment;
 import com.bean.Doctor;
 import com.bean.DoctorList;
 import com.bean.Patient;
@@ -60,4 +65,14 @@ public class PatientService {
 //		return new Patient("no id","no name","no gender",0,"no contact","no address","no symptoms");
 		return new Patient();
 	}
+	
+//	@CircuitBreaker(name = "showLatestAppointment",fallbackMethod ="showLatestAppointmentFallBack" )
+//	public Appointment showLatestAppointment() {
+//		return restTemplate.getForObject("http://appointment-service/appointments/latest", Appointment.class);
+//	}
+//	
+//	public Appointment showLatestAppointmentFallBack(Exception e) {
+//		
+//		return new Appointment("no pID","no pName",Time.valueOf(LocalTime.now()), Date.valueOf(LocalDate.now()), "no dID", "no dName", "no department",0);
+//	}
 }

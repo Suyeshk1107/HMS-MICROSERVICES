@@ -1,8 +1,11 @@
 package com.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.bean.Appointment;
+import com.bean.Patient;
+import com.bean.Schedule;
 
 public interface HmsClientService {
 
@@ -20,4 +23,10 @@ public interface HmsClientService {
 
 	boolean requestAppointment(Appointment appointment);
 
+	Patient addPatientToDatabase(Patient patient);
+
+	Patient getPatientById(String pId);
+
+	List<Schedule> getAvailableDoctorSchedule(Date date);
+	
 }
