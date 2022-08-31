@@ -45,11 +45,21 @@ public class PatientController {
 		ModelAndView modelAndView = new ModelAndView();
 		
 //		editing for hms
-		Patient patient = hmsClientService.getPatientById((String)session.getAttribute("userName"));
+		String userId = (String)session.getAttribute("userName");
+		Patient patient = patientService.showPatientById(userId);
+		
 		
 		if (patient != null) {
-			modelAndView.addObject("patient", patient);
-			modelAndView.setViewName("ShowPatient");
+			if(patient.getPatientId().equals(userId)) {
+				
+				modelAndView.addObject("patient", patient);
+				modelAndView.setViewName("ShowPatient");
+			}else {
+				String message="Failed to reach patient-server. Please try again after some time.";
+				modelAndView.addObject("message", message);
+				modelAndView.setViewName("Output");
+				
+			}
 		}
 		else {
 			String message="Patient with ID "+(String)session.getAttribute("userName")+" does not exist!";
@@ -73,12 +83,20 @@ public class PatientController {
 		ModelAndView modelAndView = new ModelAndView();
 		Date date = Date.valueOf(request.getParameter("appointmentDate"));
 		session.setAttribute("date", date);
-//		ScheduleList availableDoctorsSchedule = scheduleService.showAvailableDoctorSchedule(date);
-		List<Schedule> availableDoctorsSchedule = hmsClientService.getAvailableDoctorSchedule(date);
+		List<Schedule> availableDoctorsSchedule = scheduleService.showAvailableDoctorSchedule(date).getScheduleList();
+//		 availableDoctorsSchedule = hmsClientService.getAvailableDoctorSchedule(date);
 		if(availableDoctorsSchedule.isEmpty()) {
+			if(availableDoctorsSchedule.get(0).getScheduleId() != 0) {
+				
+			
 			modelAndView.addObject( "availableScheduleList", availableDoctorsSchedule);
 			modelAndView.addObject("command3",new Schedule());
 			modelAndView.setViewName("ShowAvailableDoctorsSchedulePage");
+			}else {
+				String message="Failed to reach schedule service. Please try again after some time.";
+				modelAndView.addObject("message", message);
+				modelAndView.setViewName("Output");
+			}
 		}
 		else {
 			String message="No available Doctor schedules to display";
@@ -108,14 +126,22 @@ public class PatientController {
 		appointment.setDoctorId(schedule.getDoctorId());
 		appointment.setDate((Date)session.getAttribute("date"));
 		
-//		Appointment appointments = appointmentService.addAppointment(appointment); //changing code here
-		if(hmsClientService.requestAppointment(appointment)) {
-			Appointment bookedAppointment = appointmentService.showLatestAppointment();
-			modelAndView.addObject( "myAppointmentList", bookedAppointment);
+		Appointment latestAppointment = appointmentService.addAppointment(appointment);
+		
+		//changing code here
+		if(latestAppointment!=null) {
+			if(latestAppointment.getPatientId().equals((String)session.getAttribute("userName"))) {
+			// Appointment bookedAppointment = appointmentService.showLatestAppointment();
+			modelAndView.addObject( "myAppointmentList",latestAppointment);
 			modelAndView.setViewName("ShowMyAppointments");
+			}else {
+				String message="Something went wrong. Please try again after some time.";
+				modelAndView.addObject("message", message);
+				modelAndView.setViewName("Output");
+			}
 		}
 		else {
-			String message="No appointments to display";
+			String message="No appointment to display";
 			modelAndView.addObject("message", message);
 			modelAndView.setViewName("Output");
 		}
@@ -131,12 +157,21 @@ public class PatientController {
 		ModelAndView modelAndView = new ModelAndView();
 		
 		String userId = (String)session.getAttribute("userName");
-		List<Appointment> appointments = hmsClientService.showAllAppointmentsByPatientId(userId);
+		List<Appointment> appointments = appointmentService.showAllAppointmentsByPatientId(userId).getAppointments(); 
+				hmsClientService.showAllAppointmentsByPatientId(userId);
 		
 		
 		if(!appointments.isEmpty() ) {
+			if(appointments.get(0).getPatientId().equals(userId)) {
+				
 			modelAndView.addObject("appointmentList", appointments);
 			modelAndView.setViewName("cancelAppointment");
+			}else {
+
+				String message="No appointments to delete";
+				modelAndView.addObject("message", message);
+				modelAndView.setViewName("Output");
+			}
 		}
 		else {
 			String message="No appointments to delete";
@@ -154,9 +189,9 @@ public class PatientController {
 		int id = Integer.parseInt(request.getParameter("appointmentId"));
 
 		String message = "";
-
+		appointmentService.deleteAppointmentById(id);
 //		if(appointmentService.deleteAppointmentById(id)) { // use reponse Entity here
-//			message="Appointment with ID "+id+" deleted successfully!";
+			message="Appointment with ID "+id+" deleted successfully!";
 //			
 //		}else {
 //			message="Appointment with ID "+id+" does not exist!";
@@ -173,13 +208,21 @@ public class PatientController {
 		ModelAndView modelAndView = new ModelAndView();
 		
 		String pId = (String) session.getAttribute("userName");
-		List<Appointment> appointments = hmsClientService.showAllAppointmentsByPatientId(pId);
+		List<Appointment> appointments = appointmentService.showAllAppointmentsByPatientId(pId).getAppointments();
+//				hmsClientService.showAllAppointmentsByPatientId(pId);
 		
 		
 //		may fail due to circuit breaker -- won't fail now
 		if(!appointments.isEmpty()) {
-			modelAndView.addObject( "myAppointmentList", appointments);
-			modelAndView.setViewName("ShowMyAppointments");
+			if(appointments.get(0).getPatientId().equals(pId)) {
+				
+				modelAndView.addObject( "myAppointmentList", appointments);
+				modelAndView.setViewName("ShowMyAppointments");
+			}else {
+				String message="Failed to reach appointment-service. Please try again after some time.";
+				modelAndView.addObject("message", message);
+				modelAndView.setViewName("Output");
+			}
 		}
 		else {
 			String message="No appointments to display";
@@ -197,12 +240,20 @@ public class PatientController {
 		ModelAndView modelAndView = new ModelAndView();
 		
 		String pId = (String) session.getAttribute("userName");
-		List<Appointment> appointments = hmsClientService.showAllAppointmentsByPatientId(pId);
+		List<Appointment> appointments = appointmentService.showAllAppointmentsByPatientId(pId).getAppointments();
+				hmsClientService.showAllAppointmentsByPatientId(pId);
 		
 		
 		if(!appointments.isEmpty()) {
+			if(appointments.get(0).getPatientId().equals(pId)) {
 			modelAndView.addObject( "appointmentList", appointments);
 			modelAndView.setViewName("rescheduleAppointment");
+			}else {
+				String message="Failed to reach appointment service. Please try again after some time.";
+				modelAndView.addObject("message", message);
+				modelAndView.setViewName("Output");
+					
+			}
 		}
 		else {
 			String message="No appointments to display";
@@ -224,12 +275,20 @@ public class PatientController {
 		Appointment appointment = new Appointment();
 		appointment.setAppointmentId(aid);
 		appointment.setDate(appointmentDate);
-		if(hmsClientService.rescheduleAppointment(appointment)) {
+		Appointment newAppointment = appointmentService.modifyAppointment(appointment);
+		if(newAppointment !=null) {
+			if(newAppointment.getAppointmentId() == aid) {
 			String message="Appointment Rescheduled successfully.";
 			modelAndView.addObject("message", message);
 			modelAndView.setViewName("Output");
+			}else {
+				String message=" Failed to reach Appointment service. Please try again.";
+				modelAndView.addObject("message", message);
+				modelAndView.setViewName("Output");
+					
+			}
 		}else{
-			String message=" reschedule Appointment. Please try again.";
+			String message="Failed to reschedule Appointment. Please try again.";
 			modelAndView.addObject("message", message);
 			modelAndView.setViewName("Output");
 		};

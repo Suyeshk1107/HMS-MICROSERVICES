@@ -35,34 +35,30 @@ public class ValidationController {
 		
 		Login login = loginService.getLogin(userName);
 		if(login != null) {
-//			fallback
 			if(login.getId().equals(userName)) {
-				password.equals(login.getPassword()){
-//					validate
+				if(password.equals(login.getPassword())){
+					// validate
+					if(userName.toUpperCase().charAt(0) == 'A' ) {
+						 
+						 modelAndView.setViewName("adminPostLogin");
+					 }else if(userName.toUpperCase().charAt(0) == 'D' ) {
+						 modelAndView.setViewName("doctorPostLogin");
+					 }else  if(userName.toUpperCase().charAt(0) == 'P' ) {
+						 modelAndView.setViewName("patientPostLogin");
+					 }
 				}else {
-//					fallback condition
+					// fallback condition
+					modelAndView.addObject("message", "Failed to reach the server, please try again after some time.");
+					modelAndView.setViewName("Login");
 					
 				}
 			}
 			
 		}else {
-			
-		}
-		
-		 if(hmsClientService.isValid(userName, password)) {
-			 if(userName.toUpperCase().charAt(0) == 'A' ) {
-				 
-				 modelAndView.setViewName("adminPostLogin");
-			 }else if(userName.toUpperCase().charAt(0) == 'D' ) {
-				 modelAndView.setViewName("doctorPostLogin");
-			 }else  if(userName.toUpperCase().charAt(0) == 'P' ) {
-				 modelAndView.setViewName("patientPostLogin");
-			 }
-		}else {
-			
 			modelAndView.addObject("message", "Invalid Credentials");
 			modelAndView.setViewName("Login");
 		}
+		
 		
 	
 		return modelAndView;
@@ -85,13 +81,22 @@ public class ValidationController {
 		patient.setPatientSymptoms(request.getParameter("pSymptom"));
 		
 		String message = null;
-		Patient newPatient = hmsClientService.addPatientToDatabase(patient);
-//		
+		Patient newPatient = patientService.addPatient(patient);
+
 		if (newPatient != null) {
-			session.setAttribute("userName", newPatient.getPatientId());
 			
-			modelAndView.addObject("message", " Your Patient ID for login is :"+newPatient.getPatientId());
-			modelAndView.setViewName("inputDetailsToRegisterPatient");
+			if(newPatient.getPatientGender().equals(newPatient.getPatientGender())) {
+				session.setAttribute("userName", newPatient.getPatientId());
+				
+				modelAndView.addObject("message", " Your Patient ID for login is :"+newPatient.getPatientId());
+				modelAndView.setViewName("inputDetailsToRegisterPatient");
+					
+			}else {
+				
+				modelAndView.addObject("message", "Failed to reach login server. Please try again after some time.");
+				modelAndView.setViewName("Login");
+				
+			}
 			
 			
 		}
@@ -99,8 +104,7 @@ public class ValidationController {
 			modelAndView.addObject("message", "Failed to register Patient. Please try again.");
 			modelAndView.setViewName("Login");
 
-		
-	}
+		}
 		return modelAndView;
 	}
 
@@ -111,8 +115,16 @@ public class ValidationController {
 		String userName = (String) session.getAttribute("userName");
 		
 		String message;
-		if(hmsClientService.registerUser(userName, password)) {
-			message = "Patient Registered to Database Successfully";
+		Login login = loginService.saveLogin(userName, password);
+		
+		if(login != null) {
+			if(login.getId().equals(userName)) {
+				
+				message = "Patient Registered to Database Successfully";
+			}else {
+				
+				message = "Something went wrong. Please try again after some time.";
+			}
 		}else {
 			message = "Failed to register Patient. Please try again after some time.";
 		}
