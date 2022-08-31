@@ -33,8 +33,8 @@ public class PatientService {
 	
 	public PatientList showAllPatientFallBack(Exception e) {
 		List<Patient> patientList = new ArrayList<Patient>();
-//		patientList.add(new Patient("no id","no name","no gender",0,"no contact","no address","no symptoms"));
-		patientList.add(new Patient());
+		patientList.add(new Patient("no id","no name","no gender",0,"no contact","no address","no symptoms"));
+//		patientList.add(new Patient());
 		return new PatientList(patientList);
 	}
 	
@@ -43,8 +43,8 @@ public class PatientService {
 		return restTemplate.getForObject("http://patient-service/patients/"+patientId, Patient.class);
 	}
 	public Patient showPatientByIdFallBack(Exception e) {
-//		return new Patient("no id","no name","no gender",0,"no contact","no address","no symptoms");
-		return new Patient();
+		return new Patient("no id","no name","no gender",0,"no contact","no address","no symptoms");
+//		return new Patient();
 	}
 	
 	@CircuitBreaker(name = "savePatient",fallbackMethod ="addPatientFallBack" )
@@ -52,8 +52,8 @@ public class PatientService {
 		return restTemplate.postForObject("http://patient-service/patients",patient, Patient.class);
 	}
 	public Patient addPatientFallBack(Exception e) {
-//		return new Patient("no id","no name","no gender",0,"no contact","no address","no symptoms");
-		return new Patient();
+		return new Patient("no id","no name","no gender",0,"no contact","no address","no symptoms");
+//		return new Patient();
 	}
 	
 	@CircuitBreaker(name = "removePatient",fallbackMethod ="deletePatientFallBack" )
@@ -62,8 +62,8 @@ public class PatientService {
 		return restTemplate.getForObject("http://patient-service/patients/"+patientId, Patient.class);
 	}
 	public Patient deletePatientFallBack(Exception e) {
-//		return new Patient("no id","no name","no gender",0,"no contact","no address","no symptoms");
-		return new Patient();
+		return new Patient("no id","no name","no gender",0,"no contact","no address","no symptoms");
+//		return new Patient();
 	}
 	
 //	@CircuitBreaker(name = "showLatestAppointment",fallbackMethod ="showLatestAppointmentFallBack" )

@@ -50,10 +50,10 @@ public class AdminController {
 		doctor.setDoctorDepartment(request.getParameter("dDepartment"));
 		
 		String message = null;
-		if (doctorService.addDoctor(doctor)!=null)
+		if (doctorService.addDoctor(doctor).getDoctorContact().equals(request.getParameter("dContact")))
 			message = "Doctor Added Successfully";
 		else
-			message = "Doctor Addition Failed";
+			message = "couldn't reach the server, please try again after some time";
 
 		modelAndView.addObject("message", message);
 		modelAndView.setViewName("Output");
@@ -80,11 +80,17 @@ public class AdminController {
 		DoctorList doctorList = doctorService.showAllDoctor();
 		String message = null;
 		if (doctorList != null) {
+			if(doctorList.getDoctorList().get(0).getDoctorId().equals("no id")) {
+				message = "couldn't reach the server, please try again after some time";
+				modelAndView.addObject("message", message);
+				modelAndView.setViewName("Output");
+				return modelAndView;
+			}else {
 			modelAndView.addObject("doctorList", doctorList.getDoctorList());
 			modelAndView.addObject("command2",new Doctor());
 			modelAndView.setViewName("ShowAllDoctorsToRemove");
 			return modelAndView;
-		}
+		}}
 		else {
 			message = "No Doctor to show !";
 
@@ -95,19 +101,31 @@ public class AdminController {
 //>>>>>>> branch 'master' of https://github.com/krishna-kusum/HMS-in-Spring-JPA-.git
 	}
 	@RequestMapping("/removeDoctor")
-public ModelAndView removeDoctorController(@ModelAttribute("command2") Doctor doctor) {
+	public ModelAndView removeDoctorController(@ModelAttribute("command2") Doctor doctor) {
 		ModelAndView modelAndView = new ModelAndView();
 		
 		
 		String message = null;
-		if (doctorService.deleteDoctor(doctor.getDoctorId()) == null)
+		if (doctorService.deleteDoctor(doctor.getDoctorId()) == null) {
 			message = "Doctor Removed Successfully";
-		else
-			message = "Remove Failed";
-
-		modelAndView.addObject("message", message);
-		modelAndView.setViewName("Output");
-		return modelAndView;
+			modelAndView.addObject("message", message);
+			modelAndView.setViewName("Output");
+			return modelAndView;
+		}
+		else {
+			if(doctorService.deleteDoctor(doctor.getDoctorId()).getDoctorId().equals("no id")) {
+				message = "couldn't reach the server, please try again after some time";
+				modelAndView.addObject("message", message);
+				modelAndView.setViewName("Output");
+				return modelAndView;
+			}
+			else {
+				message = "Remove Failed";
+				modelAndView.addObject("message", message);
+				modelAndView.setViewName("Output");
+				return modelAndView;
+			}
+		}
 	}
 //Show All Doctors	
 	@RequestMapping("/showAllDoctors")
@@ -117,11 +135,17 @@ public ModelAndView removeDoctorController(@ModelAttribute("command2") Doctor do
 		DoctorList docList = doctorService.showAllDoctor();
 		String message = null;
 		if (docList.getDoctorList() != null) {
+			if(docList.getDoctorList().get(0).getDoctorId().equals("no id")) {
+				message = "couldn't reach the server, please try again after some time";
+				modelAndView.addObject("message", message);
+				modelAndView.setViewName("Output");
+				return modelAndView;
+			}else {
 			List<Doctor> doctorList= docList.getDoctorList();
 			modelAndView.addObject("doctorList", doctorList);
 			modelAndView.setViewName("ShowAllDoctors");
 			return modelAndView;
-		}
+		}}
 		else {
 			message = "No Doctor to show !";
 
@@ -149,11 +173,17 @@ public ModelAndView removeDoctorController(@ModelAttribute("command2") Doctor do
 		PatientList pList = patientService.showAllPatient();
 		String message = null;
 		if (pList.getPatientList() != null) {
+			if(pList.getPatientList().get(0).getPatientId().equals("no name")) {
+				message = "couldn't reach the server, please try again after some time";
+				modelAndView.addObject("message", message);
+				modelAndView.setViewName("Output");
+				return modelAndView;
+			}else {
 			List<Patient> patientList = pList.getPatientList();
 			modelAndView.addObject("patientList", patientList);
 			modelAndView.addObject("command",new Patient());
 			modelAndView.setViewName("ShowAllPatientToRemove");
-			return modelAndView;
+			return modelAndView;}
 		}
 		else {
 			message = "No Patient to delete !";
@@ -175,11 +205,17 @@ public ModelAndView removeDoctorController(@ModelAttribute("command2") Doctor do
 			return modelAndView;
 		}
 		else {
+			if(patientService.deletePatient(patient.getPatientId()).getPatientId().equals("no id")) {
+				message = "couldn't reach the server, please try again after some time";
+				modelAndView.addObject("message", message);
+				modelAndView.setViewName("Output");
+				return modelAndView;
+			}else {
 			message = "Patient deletion failed";
 			modelAndView.addObject("message", message);
 			modelAndView.setViewName("Output");
 			return modelAndView;
-		}
+		}}
 		
 	}
 	
@@ -193,14 +229,21 @@ public ModelAndView removeDoctorController(@ModelAttribute("command2") Doctor do
 		PatientList pList = patientService.showAllPatient();
 		String message = null;
 		if (pList.getPatientList() != null) {
+			if(pList.getPatientList().get(0).getPatientId().equals("no name")) {
+				message = "couldn't reach the server, please try again after some time";
+				modelAndView.addObject("message", message);
+				modelAndView.setViewName("Output");
+				return modelAndView;
+			}else {
 			List<Patient> patientList = pList.getPatientList();
 			modelAndView.addObject("patientList", patientList);
 			modelAndView.setViewName("ShowAllPatient");
 			return modelAndView;
+			}
 		}
 		else {
-			message = "No Patient to show !";
-
+			
+		message = "No Patient to show !";
 		modelAndView.addObject("message", message);
 		modelAndView.setViewName("Output");
 		return modelAndView;

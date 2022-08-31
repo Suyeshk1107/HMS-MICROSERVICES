@@ -25,8 +25,8 @@ public class DoctorService {
 	
 	public DoctorList showAllDoctorFallBack(Exception e) {
 		List<Doctor> docList = new ArrayList<Doctor>();
-//		docList.add(new Doctor("no id","no name","no department",0,"no gender",0,"no contact","no address"));
-		docList.add(new Doctor());
+		docList.add(new Doctor("no id","no name","no department",0,"no gender",0,"no contact","no address"));
+//		docList.add(new Doctor());
 		return new DoctorList(docList);
 	}
 	
@@ -35,8 +35,8 @@ public class DoctorService {
 		return restTemplate.getForObject("http://doctor-service/doctors/"+doctorId, Doctor.class);
 	}
 	public Doctor showDoctorByIdFallBack(Exception e) {
-//		return new Doctor("no id","no name","no department",0,"no gender",0,"no contact","no address");
-		return new Doctor();
+		return new Doctor("no id","no name","no department",0,"no gender",0,"no contact","no address");
+//		return new Doctor();
 	}
 	
 	@CircuitBreaker(name = "saveDoctor",fallbackMethod ="addDoctorFallBack" )
@@ -44,8 +44,8 @@ public class DoctorService {
 		return restTemplate.postForObject("http://doctor-service/doctors",doctor, Doctor.class);
 	}
 	public Doctor addDoctorFallBack(Exception e) {
-//		return new Doctor("no id","no name","no department",0,"no gender",0,"no contact","no address");
-		return new Doctor();
+		return new Doctor("no id","no name","no department",0,"no gender",0,"no contact","no address");
+//		return new Doctor();
 	}
 	
 	@CircuitBreaker(name = "removeDoctor",fallbackMethod ="deleteDoctorFallBack" )
@@ -54,7 +54,7 @@ public class DoctorService {
 		return restTemplate.getForObject("http://doctor-service/doctors/"+doctorId, Doctor.class);
 	}
 	public Doctor deleteDoctorFallBack(Exception e) {
-//		return new Doctor("no id","no name","no department",0,"no gender",0,"no contact","no address");
-		return new Doctor();
+		return new Doctor("no id","no name","no department",0,"no gender",0,"no contact","no address");
+//		return new Doctor();
 	}
 }

@@ -37,8 +37,15 @@ public class DoctorController {
 
 		Patient patient = patientService.showPatientById(request.getParameter("pId"));
 		if (patient != null) {
-			modelAndView.addObject("patient", patient);
-			modelAndView.setViewName("ShowPatient");
+			if(patient.getPatientId().equals(request.getParameter("pId"))) {
+				modelAndView.addObject("patient", patient);
+				modelAndView.setViewName("ShowPatient");
+			}
+			else {
+				String message="couldn't reach the server, please try again after some time";
+				modelAndView.addObject("message", message);
+				modelAndView.setViewName("Output");
+			}
 		}
 		else {
 			String message="Patient with ID "+request.getParameter("pId")+" does not exist!";
@@ -74,8 +81,14 @@ public class DoctorController {
 		ModelAndView modelAndView = new ModelAndView();
 		Schedule schedule = scheduleService.showScheduleByDoctorId((String) session.getAttribute("userName"));
 		if (schedule != null) {
+			if(schedule.getDoctorId().equals((String)session.getAttribute("userName"))) {
 			modelAndView.addObject("schedule", schedule);
 			modelAndView.setViewName("ShowMySchedules");
+		}else {
+			String message="couldn't reach the server, please try again after some time";
+			modelAndView.addObject("message", message);
+			modelAndView.setViewName("Output");
+		}
 		}
 		else {
 			String message="No schedules to display !";
