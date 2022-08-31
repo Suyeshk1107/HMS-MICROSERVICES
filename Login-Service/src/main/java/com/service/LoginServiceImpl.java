@@ -29,9 +29,12 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public Login getLoginById(String id) {
 		
-		if(id!=null)
-			return loginDao.getReferenceById(id);
-		return null;
+		Optional<Login> login = loginDao.findById(id);
+		if(login.isPresent()) {
+			return login.get();
+		}else {
+			return new Login();
+		}
 	}
 
 	@Override

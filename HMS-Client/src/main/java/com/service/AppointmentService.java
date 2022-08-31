@@ -67,7 +67,7 @@ public class AppointmentService {
 
 	@CircuitBreaker(name = "saveAppointment",fallbackMethod ="addAppointmentFallBack" )
 	public Appointment addAppointment(Appointment appointment) {
-		return restTemplate.postForObject("http://appointment-service/appointments",appointment, Appointment.class);
+		return restTemplate.postForObject("http://appointment-service/appointments/",appointment, Appointment.class);
 	}
 	
 	public Appointment addAppointmentFallBack(Exception e) {
@@ -77,7 +77,7 @@ public class AppointmentService {
 	
 	@CircuitBreaker(name = "removeAppointment",fallbackMethod ="deleteAppointmentFallBack" )
 	public Appointment deleteAppointmentById(int appointmentId) {
-		restTemplate.delete("http://patient-service/patients/"+appointmentId);
+		restTemplate.delete("http://appointment-service/appointments/"+appointmentId);
 		return restTemplate.getForObject("http://appointment-service/appointments/"+appointmentId, Appointment.class);
 	}
 	public Appointment deleteAppointmentFallBack(Exception e) {
@@ -86,7 +86,8 @@ public class AppointmentService {
 	
 	@CircuitBreaker(name = "modifyAppointment",fallbackMethod ="modifyAppointmentFallBack" )
 	public Appointment modifyAppointment(Appointment appointment) {
-		return restTemplate.patchForObject("http://appointment-service/appointments/"+appointment.getAppointmentId(), appointment, Appointment.class);
+		restTemplate.put("http://appointment-service/appointments/"+appointment.getAppointmentId(), appointment, Appointment.class);
+		return restTemplate.getForObject("http://appointment-service/appointments/"+appointment.getAppointmentId(), Appointment.class);
 	}
 	
 	public Appointment modifyAppointmentFallBack(Appointment appointment) {

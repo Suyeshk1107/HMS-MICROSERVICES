@@ -16,6 +16,7 @@ import com.bean.DoctorList;
 import com.bean.Patient;
 import com.bean.PatientList;
 import com.service.DoctorService;
+import com.service.LoginService;
 import com.service.PatientService;
 
 @Controller
@@ -29,6 +30,8 @@ public class AdminController {
 	private DoctorService doctorService;
 	@Autowired
 	private PatientService patientService;
+	@Autowired
+	private LoginService loginService;
 	
 //  Add Doctor
 	@RequestMapping("/addDoctor")
@@ -50,8 +53,10 @@ public class AdminController {
 		doctor.setDoctorDepartment(request.getParameter("dDepartment"));
 		
 		String message = null;
-		if (doctorService.addDoctor(doctor).getDoctorContact().equals(request.getParameter("dContact")))
-			message = "Doctor Added Successfully";
+		Doctor doc = doctorService.addDoctor(doctor);
+		if (doc.getDoctorContact().equals(request.getParameter("dContact"))) {
+			message = "Doctor Added Successfully with user id : " + doc.getDoctorId() + " and Password : "+ doc.getDoctorId();
+			loginService.saveLogin(doc.getDoctorId(), doc.getDoctorId());}
 		else
 			message = "couldn't reach the server, please try again after some time";
 
@@ -106,8 +111,10 @@ public class AdminController {
 		
 		
 		String message = null;
-		if (doctorService.deleteDoctor(doctor.getDoctorId()) == null) {
+		Doctor doc = doctorService.deleteDoctor(doctor.getDoctorId());
+		if (doc.getDoctorId() == null) {
 			message = "Doctor Removed Successfully";
+			loginService.deleteLogin(doctor.getDoctorId());
 			modelAndView.addObject("message", message);
 			modelAndView.setViewName("Output");
 			return modelAndView;
@@ -198,8 +205,10 @@ public class AdminController {
 	public ModelAndView removePatientMessage(@ModelAttribute("command") Patient patient) {
 		ModelAndView modelAndView = new ModelAndView();
 		String message = null;
-		if (patientService.deletePatient(patient.getPatientId())==null) {
+		Patient pt = patientService.deletePatient(patient.getPatientId());
+		if (pt.getPatientId()==null) {
 			message = "Patient deleted Successfully";
+			loginService.deleteLogin(patient.getPatientId());
 			modelAndView.addObject("message", message);
 			modelAndView.setViewName("Output");
 			return modelAndView;

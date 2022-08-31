@@ -34,7 +34,7 @@ public class PatientResource {
 		return patientService.addPatient(patient);
 	}
 	
-	@DeleteMapping(path = "/patients/remove/{pId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(path = "/patients/{pId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Patient removeDoctorById(@PathVariable("pId") String patientId) {
 		return patientService.deletePatient(patientId);
 	}

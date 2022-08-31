@@ -38,7 +38,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 	
 	@Override
 	public Appointment getAppointmentById(int id) {
-		return appointmentDao.getReferenceById(id);
+		Optional<Appointment> appointment = appointmentDao.findById(id);
+		if(appointment.isPresent()) {
+			return appointment.get();
+		}else {
+			return new Appointment();
+		}
 	}
 	
 	@Override
@@ -124,7 +129,12 @@ public class AppointmentServiceImpl implements AppointmentService {
 			int rows = appointmentDao.updateAppointmentByIdAndDate(appointment.getAppointmentId(),appointment.getDate());
 			
 			if(rows>0) {
-				return appointmentDao.getReferenceById(appointment.getAppointmentId());
+				Optional<Appointment> appointment2 = appointmentDao.findById(appointment.getAppointmentId());
+				if(appointment2.isPresent()) {
+					return appointment2.get();
+				}else {
+					return new Appointment();
+				}
 			}
 		}
 		

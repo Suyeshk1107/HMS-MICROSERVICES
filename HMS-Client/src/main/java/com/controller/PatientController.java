@@ -1,6 +1,7 @@
 package com.controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -85,7 +86,7 @@ public class PatientController {
 		session.setAttribute("date", date);
 		List<Schedule> availableDoctorsSchedule = scheduleService.showAvailableDoctorSchedule(date).getScheduleList();
 //		 availableDoctorsSchedule = hmsClientService.getAvailableDoctorSchedule(date);
-		if(availableDoctorsSchedule.isEmpty()) {
+		if(!availableDoctorsSchedule.isEmpty()) {
 			if(availableDoctorsSchedule.get(0).getScheduleId() != 0) {
 				
 			
@@ -117,13 +118,13 @@ public class PatientController {
 	}
 	
 	@RequestMapping("/bookAppointment")
-	public ModelAndView bookAppointmentController(@ModelAttribute("command2") Schedule schedule, HttpSession session) {
+	public ModelAndView bookAppointmentController(HttpServletRequest request, HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
 		
 //		String doctorId = request.getParameter("dId");
 		Appointment appointment = new Appointment();
 		appointment.setPatientId((String)session.getAttribute("userName"));
-		appointment.setDoctorId(schedule.getDoctorId());
+		appointment.setDoctorId(request.getParameter("dId"));
 		appointment.setDate((Date)session.getAttribute("date"));
 		
 		Appointment latestAppointment = appointmentService.addAppointment(appointment);
@@ -132,7 +133,9 @@ public class PatientController {
 		if(latestAppointment!=null) {
 			if(latestAppointment.getPatientId().equals((String)session.getAttribute("userName"))) {
 			// Appointment bookedAppointment = appointmentService.showLatestAppointment();
-			modelAndView.addObject( "myAppointmentList",latestAppointment);
+				List<Appointment> lA = new ArrayList<>();
+				lA.add(latestAppointment);
+			modelAndView.addObject( "myAppointmentList",lA);
 			modelAndView.setViewName("ShowMyAppointments");
 			}else {
 				String message="Something went wrong. Please try again after some time.";
@@ -158,7 +161,7 @@ public class PatientController {
 		
 		String userId = (String)session.getAttribute("userName");
 		List<Appointment> appointments = appointmentService.showAllAppointmentsByPatientId(userId).getAppointments(); 
-				hmsClientService.showAllAppointmentsByPatientId(userId);
+//				hmsClientService.showAllAppointmentsByPatientId(userId);
 		
 		
 		if(!appointments.isEmpty() ) {
@@ -189,13 +192,13 @@ public class PatientController {
 		int id = Integer.parseInt(request.getParameter("appointmentId"));
 
 		String message = "";
-		appointmentService.deleteAppointmentById(id);
-//		if(appointmentService.deleteAppointmentById(id)) { // use reponse Entity here
+//		appointmentService.deleteAppointmentById(id);
+		if(appointmentService.deleteAppointmentById(id).getAppointmentId() == 0) { 
 			message="Appointment with ID "+id+" deleted successfully!";
-//			
-//		}else {
-//			message="Appointment with ID "+id+" does not exist!";
-//		}
+			
+		}else {
+			message="Appointment with ID "+id+" does not exist!";
+		}
 		
 		modelAndView.addObject("message", message);
 		modelAndView.setViewName("Output");

@@ -61,7 +61,7 @@ public class AppointmentResource {
 		return appointmentService.deleteAppointment(id);
 	}
 	
-	@PatchMapping(path = "/appointments/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(path = "/appointments/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public Appointment rescheduleAppointmentResource(@RequestBody Appointment appointment,@PathVariable("id") int id) {
 		return appointmentService.modifyAppointment(appointment);
 	}

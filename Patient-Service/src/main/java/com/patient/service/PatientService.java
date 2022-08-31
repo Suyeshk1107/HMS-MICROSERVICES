@@ -1,8 +1,11 @@
 package com.patient.service;
 
 import java.util.List;
-import com.patient.bean.Patient;
 
+import org.springframework.stereotype.Service;
+
+import com.patient.bean.Patient;
+@Service
 public interface PatientService {
 	
 	List<Patient> getAllPatient();

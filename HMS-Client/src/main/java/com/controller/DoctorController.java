@@ -1,6 +1,8 @@
 package com.controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -9,8 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bean.Appointment;
 import com.bean.Patient;
 import com.bean.Schedule;
+import com.service.AppointmentService;
 import com.service.DoctorService;
 import com.service.PatientService;
 import com.service.ScheduleService;
@@ -19,6 +23,8 @@ import com.service.ScheduleService;
 public class DoctorController {
 	@Autowired
 	private DoctorService doctorService;
+	@Autowired
+	private AppointmentService appointmentService;
 	@Autowired
 	private PatientService patientService;
 	@Autowired
@@ -56,24 +62,32 @@ public class DoctorController {
 	}
 	
 	
-//	@RequestMapping("/showAppointment")
-//	public ModelAndView showAppointmentControllerForDoctor(HttpSession session) {
-//		ModelAndView modelAndView = new ModelAndView();
-//		String id = (String) session.getAttribute("userName");
-//		String message ;
-//		List<Appointment> appointmentDoc = doctorService.getMyAppointments(id);
-//		if(appointmentDoc.isEmpty()) {
-//			message = "No appointments requested.";
-//			modelAndView.addObject("message", message);
-//			modelAndView.setViewName("Output");
-//			return modelAndView;
-//			
-//		}
-//		else {
-//			
-//			return new ModelAndView("ShowMyAppointments", "myAppointmentList", appointmentDoc);
-//		}
-//	}
+	@RequestMapping("/showAppointment")
+	public ModelAndView showAppointmentControllerForDoctor(HttpSession session) {
+		ModelAndView modelAndView = new ModelAndView();
+		String id = (String) session.getAttribute("userName");
+		String message ;
+		List<Appointment> appointmentDoc = appointmentService.showAllAppointmentsByDoctorId(id).getAppointments();
+		if(appointmentDoc.isEmpty()) {
+			
+			message = "No appointments requested.";
+			modelAndView.addObject("message", message);
+			modelAndView.setViewName("Output");
+			return modelAndView;
+			
+		}
+		else {
+			if(appointmentDoc.get(0).getDoctorId().equals(id)) {
+				return new ModelAndView("ShowMyAppointments", "myAppointmentList", appointmentDoc);
+			}else {
+				message="couldn't reach the server, please try again after some time";
+				modelAndView.addObject("message", message);
+				modelAndView.setViewName("Output");
+				return modelAndView;
+			}
+			
+		}
+	}
 	
 	
 	@RequestMapping("/viewSchedule")
