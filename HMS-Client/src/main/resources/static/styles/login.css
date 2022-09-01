@@ -11,7 +11,7 @@ body {
 	
 }
 
-.form{
+div{
 	height : 550px;
 	width : 800px;
 	position:absolute;
@@ -32,6 +32,16 @@ p{
     line-height : 45px;
     font-weight: bold;
 	
+}
+a{
+	text-decoration:none;
+	color : white;
+	letter-spacing:2px;
+	
+	text-shadow:3px 1px 10px aqua;
+	font-size: 25px;
+	font-weight: bold;
+	text-transform: uppercase;
 }
 
 

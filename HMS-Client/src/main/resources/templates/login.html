@@ -3,10 +3,11 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Login Page</title>
-<link th:href="@{/styles/main.css}" rel="stylesheet">
+<link th:href="@{/styles/login.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Welcome to Login page !</h1>
+<div>
+<p>Welcome to Login page !</p>
 	<form action="/validate" method="post">
 		Enter User Name : <input type="text" name="user" required = "required" placeholder="Enter userID" ><br><br>
 		Enter Password : <input type="password" name="pass" required="required" placeholder="Enter password"><br><br>
@@ -14,10 +15,11 @@
 		
 	</form>
 <br><br>
-<h2 th:text="${message}" style="color: red"></h2>
+<p th:text="${message}" style="color: red"></p>
 <br><br>
 <input type="button" value="Go back!" onclick="history.back()">
 <br><br>
 <a href="./">Go To Main Page</a>
+</div>
 </body>
 </html>

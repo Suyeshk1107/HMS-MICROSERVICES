@@ -7,8 +7,8 @@
 </head>
 <body>
 <br>
-<h3>Patient Registration Form</h3>
-<div>
+<div class="form">
+<p>Patient Registration Form</p>
 <form action="/inputDetailsToRegisterPatient" method="post">
 	Enter Patient Name : <input type="text" name="pName" required="required" placeholder="Your Name"><br><br>
 	Enter Patient Age : <input type="number" name="pAge" required="required" placeholder="Your Age"><br><br>
@@ -23,14 +23,7 @@
 	<input type="reset" value="Reset Form">
 
 </form>
-</div>
-
-
-<div>
-<br><br>
 <h3 th:text="${message}" style="color: red"></h3>
-<br>
-<br>
  <input type="button" value="Go back!" onclick="history.back()">
  </div>
 </body>
