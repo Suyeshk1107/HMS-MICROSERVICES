@@ -1,0 +1,43 @@
+@charset "ISO-8859-1";
+
+
+body {
+ 	background-image: url("main.png");
+ 	background-repeat: no-repeat;
+ 	background-size: cover;
+ 	background-color: #38444d;
+ 	font-family: verdana;
+	font-size: 100%;
+	
+}
+
+div{
+	height : 500px;
+	width : 800px;
+	position:absolute;
+    top: 25%;
+    left: 25%;
+    text-align: center;
+    background: rgba(0,255,255,0.5);
+  	border-radius:10px; 
+    box-shadow: 0px 1px 12px rgba(0, 0, 0, 0.5);
+    color : white;
+   
+}
+a{
+	text-decoration:none;
+	color : white;
+	letter-spacing:2px;
+	line-height:5px;
+	text-shadow:3px 1px 10px aqua;
+	font-size: 45px;
+	font-weight: bold;
+}
+/*
+h1{
+	color:#92f906;
+}
+h3{
+	color:aqua;
+}
+*/

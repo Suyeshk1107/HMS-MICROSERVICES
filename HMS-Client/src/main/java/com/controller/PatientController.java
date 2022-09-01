@@ -94,7 +94,7 @@ public class PatientController {
 			modelAndView.addObject("command3",new Schedule());
 			modelAndView.setViewName("ShowAvailableDoctorsSchedulePage");
 			}else {
-				String message="Failed to reach schedule service. Please try again after some time.";
+				String message="Failed to reach appointment service. Please try again after some time.";
 				modelAndView.addObject("message", message);
 				modelAndView.setViewName("Output");
 			}
@@ -171,7 +171,7 @@ public class PatientController {
 			modelAndView.setViewName("cancelAppointment");
 			}else {
 
-				String message="No appointments to delete";
+				String message="Failed to reach appointment service. Please try again after some time.";
 				modelAndView.addObject("message", message);
 				modelAndView.setViewName("Output");
 			}

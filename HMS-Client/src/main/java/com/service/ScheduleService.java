@@ -21,7 +21,7 @@ public class ScheduleService {
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	@CircuitBreaker(name = "allSchedule",fallbackMethod ="showAllScheduleFallBack" )
+	@CircuitBreaker(name = "schedule",fallbackMethod ="showAllScheduleFallBack" )
 	public ScheduleList showAllSchedule() {
 		return restTemplate.getForObject("http://schedule-service/schedules", ScheduleList.class);
 	}
@@ -32,16 +32,16 @@ public class ScheduleService {
 	}
 	
 	
-	@CircuitBreaker(name = "Schedule",fallbackMethod ="showScheduleByDoctorIdFallBack" )
+	@CircuitBreaker(name = "schedule",fallbackMethod ="showScheduleByDoctorIdFallBack" )
 	public Schedule showScheduleByDoctorId(String doctorId) {
 		return restTemplate.getForObject("http://schedule-service/schedules/"+doctorId, Schedule.class);
 	}
-	public Schedule showDoctorByIdFallBack(Exception e) {
+	public Schedule showScheduleByDoctorIdFallBack(Exception e) {
 		return new Schedule(0,"no id","no name","no day",null,null);
 	}
 
 	
-	@CircuitBreaker(name = "availableDoctorSchedule",fallbackMethod ="showAvailableDoctorScheduleFallBack" )
+	@CircuitBreaker(name = "schedule",fallbackMethod ="showAvailableDoctorScheduleFallBack" )
 	public ScheduleList showAvailableDoctorSchedule(Date date) {
 		Format f = new SimpleDateFormat("EEEE");  
 		String day = f.format(date);
@@ -54,7 +54,7 @@ public class ScheduleService {
 	}
 	
 	
-	@CircuitBreaker(name = "removeSchedule",fallbackMethod ="deleteScheduleFallBack" )
+	@CircuitBreaker(name = "schedule",fallbackMethod ="deleteScheduleFallBack" )
 	public Schedule deleteSchedule(String doctorId) {
 		restTemplate.delete("http://schedule-service/schedules/"+doctorId);
 		return restTemplate.getForObject("http://schedule-service/schedules/"+doctorId, Schedule.class);

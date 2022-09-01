@@ -48,15 +48,21 @@ public class ValidationController {
 					 }
 				}else {
 					// fallback condition
-					modelAndView.addObject("message", "Failed to reach the server, please try again after some time.");
-					modelAndView.setViewName("Login");
+					modelAndView.addObject("message","Invalid Credentials" );
+					modelAndView.setViewName("login");
 					
 				}
 			}
-			
+			else {
+				// fallback condition
+				modelAndView.addObject("message","Failed to reach the server, please try again after some time.");
+				modelAndView.setViewName("login");
+				
+			}
+//"Failed to reach the server, please try again after some time."			
 		}else {
 			modelAndView.addObject("message", "Invalid Credentials");
-			modelAndView.setViewName("Login");
+			modelAndView.setViewName("login");
 		}
 		
 		

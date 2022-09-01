@@ -85,7 +85,7 @@ public class AdminController {
 		DoctorList doctorList = doctorService.showAllDoctor();
 		String message = null;
 		if (doctorList != null) {
-			if(doctorList.getDoctorList().get(0).getDoctorId().equals("no id")) {
+			if(doctorList.getDoctorList().get(0).getDoctorId() == null) {
 				message = "couldn't reach the server, please try again after some time";
 				modelAndView.addObject("message", message);
 				modelAndView.setViewName("Output");
@@ -142,7 +142,7 @@ public class AdminController {
 		DoctorList docList = doctorService.showAllDoctor();
 		String message = null;
 		if (docList.getDoctorList() != null) {
-			if(docList.getDoctorList().get(0).getDoctorId().equals("no id")) {
+			if(docList.getDoctorList().get(0).getDoctorId()==null) {
 				message = "couldn't reach the server, please try again after some time";
 				modelAndView.addObject("message", message);
 				modelAndView.setViewName("Output");
@@ -180,7 +180,7 @@ public class AdminController {
 		PatientList pList = patientService.showAllPatient();
 		String message = null;
 		if (pList.getPatientList() != null) {
-			if(pList.getPatientList().get(0).getPatientId().equals("no name")) {
+			if(pList.getPatientList().get(0).getPatientId().equals("no id")) {
 				message = "couldn't reach the server, please try again after some time";
 				modelAndView.addObject("message", message);
 				modelAndView.setViewName("Output");
@@ -238,7 +238,7 @@ public class AdminController {
 		PatientList pList = patientService.showAllPatient();
 		String message = null;
 		if (pList.getPatientList() != null) {
-			if(pList.getPatientList().get(0).getPatientId().equals("no name")) {
+			if(pList.getPatientList().get(0).getPatientId().equals("no id")) {
 				message = "couldn't reach the server, please try again after some time";
 				modelAndView.addObject("message", message);
 				modelAndView.setViewName("Output");

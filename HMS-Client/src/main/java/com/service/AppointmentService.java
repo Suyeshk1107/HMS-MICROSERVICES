@@ -25,18 +25,18 @@ public class AppointmentService {
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	@CircuitBreaker(name = "allAppointments",fallbackMethod ="showAllAppointmentsFallBack" )
+	@CircuitBreaker(name = "appointments",fallbackMethod ="showAllAppointmentsFallBack" )
 	public AppointmentList showAllAppointments() {
 		return restTemplate.getForObject("http://appointment-service/appointments", AppointmentList.class);
 	}
 	
-	@CircuitBreaker(name = "allAppointmentsByPatientId",fallbackMethod ="showAllAppointmentsFallBack" )
+	@CircuitBreaker(name = "appointments",fallbackMethod ="showAllAppointmentsFallBack" )
 	public AppointmentList showAllAppointmentsByPatientId(String pId) {
 		return restTemplate.getForObject("http://appointment-service/appointments/p/"+pId, AppointmentList.class);
 	}
 	
 	
-	@CircuitBreaker(name = "allAppointmentsByDoctorId",fallbackMethod ="showAllAppointmentsFallBack" )
+	@CircuitBreaker(name = "appointments",fallbackMethod ="showAllAppointmentsFallBack" )
 	public AppointmentList showAllAppointmentsByDoctorId(String dId) {
 		return restTemplate.getForObject("http://appointment-service/appointments/d/"+dId, AppointmentList.class);
 	}
@@ -47,7 +47,7 @@ public class AppointmentService {
 		return new AppointmentList(appointments);
 	}
 	
-	@CircuitBreaker(name = "Appointment",fallbackMethod ="showAppointmentByIdFallBack" )
+	@CircuitBreaker(name = "appointments",fallbackMethod ="showAppointmentByIdFallBack" )
 	public Appointment showAppointmentsById(String appointmentId) {
 		return restTemplate.getForObject("http://appointment-service/appointments/"+appointmentId, Appointment.class);
 	}
@@ -55,7 +55,7 @@ public class AppointmentService {
 		return new Appointment("no pID","no pName",Time.valueOf(LocalTime.now()), Date.valueOf(LocalDate.now()), "no dID", "no dName", "no department",0);
 	}
 	
-	@CircuitBreaker(name = "showLatestAppointment",fallbackMethod ="showLatestAppointmentFallBack" )
+	@CircuitBreaker(name = "appointments",fallbackMethod ="showLatestAppointmentFallBack" )
 	public Appointment showLatestAppointment() {
 		return restTemplate.getForObject("http://appointment-service/appointments/latest", Appointment.class);
 	}
@@ -65,7 +65,7 @@ public class AppointmentService {
 		return new Appointment("no pID","no pName",Time.valueOf(LocalTime.now()), Date.valueOf(LocalDate.now()), "no dID", "no dName", "no department",0);
 	}
 
-	@CircuitBreaker(name = "saveAppointment",fallbackMethod ="addAppointmentFallBack" )
+	@CircuitBreaker(name = "appointments",fallbackMethod ="addAppointmentFallBack" )
 	public Appointment addAppointment(Appointment appointment) {
 		return restTemplate.postForObject("http://appointment-service/appointments/",appointment, Appointment.class);
 	}
@@ -75,7 +75,7 @@ public class AppointmentService {
 	}
 	
 	
-	@CircuitBreaker(name = "removeAppointment",fallbackMethod ="deleteAppointmentFallBack" )
+	@CircuitBreaker(name = "appointments",fallbackMethod ="deleteAppointmentFallBack" )
 	public Appointment deleteAppointmentById(int appointmentId) {
 		restTemplate.delete("http://appointment-service/appointments/"+appointmentId);
 		return restTemplate.getForObject("http://appointment-service/appointments/"+appointmentId, Appointment.class);
@@ -84,7 +84,7 @@ public class AppointmentService {
 		return new Appointment("no pID","no pName",Time.valueOf(LocalTime.now()), Date.valueOf(LocalDate.now()), "no dID", "no dName", "no department",0);
 	}
 	
-	@CircuitBreaker(name = "modifyAppointment",fallbackMethod ="modifyAppointmentFallBack" )
+	@CircuitBreaker(name = "appointments",fallbackMethod ="modifyAppointmentFallBack" )
 	public Appointment modifyAppointment(Appointment appointment) {
 		restTemplate.put("http://appointment-service/appointments/"+appointment.getAppointmentId(), appointment, Appointment.class);
 		return restTemplate.getForObject("http://appointment-service/appointments/"+appointment.getAppointmentId(), Appointment.class);

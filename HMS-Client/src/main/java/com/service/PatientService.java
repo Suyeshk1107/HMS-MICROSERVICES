@@ -26,7 +26,7 @@ public class PatientService {
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	@CircuitBreaker(name = "allPatient",fallbackMethod ="showAllPatientFallBack" )
+	@CircuitBreaker(name = "patient",fallbackMethod ="showAllPatientFallBack" )
 	public PatientList showAllPatient() {
 		return restTemplate.getForObject("http://patient-service/patients", PatientList.class);
 	}
@@ -38,7 +38,7 @@ public class PatientService {
 		return new PatientList(patientList);
 	}
 	
-	@CircuitBreaker(name = "Patient",fallbackMethod ="showPatientByIdFallBack" )
+	@CircuitBreaker(name = "patient",fallbackMethod ="showPatientByIdFallBack" )
 	public Patient showPatientById(String patientId) {
 		return restTemplate.getForObject("http://patient-service/patients/"+patientId, Patient.class);
 	}
@@ -47,7 +47,7 @@ public class PatientService {
 //		return new Patient();
 	}
 	
-	@CircuitBreaker(name = "savePatient",fallbackMethod ="addPatientFallBack" )
+	@CircuitBreaker(name = "patient",fallbackMethod ="addPatientFallBack" )
 	public Patient addPatient(Patient patient) {
 		return restTemplate.postForObject("http://patient-service/patients",patient, Patient.class);
 	}
@@ -56,7 +56,7 @@ public class PatientService {
 //		return new Patient();
 	}
 	
-	@CircuitBreaker(name = "removePatient",fallbackMethod ="deletePatientFallBack" )
+	@CircuitBreaker(name = "patient",fallbackMethod ="deletePatientFallBack" )
 	public Patient deletePatient(String patientId) {
 		restTemplate.delete("http://patient-service/patients/"+patientId);
 		return restTemplate.getForObject("http://patient-service/patients/"+patientId, Patient.class);

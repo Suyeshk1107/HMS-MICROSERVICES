@@ -24,20 +24,21 @@ public class LoginService {
 		return restTemplate.getForObject("http://login-service/logins/"+userId, Login.class);
 	}
 	
-	public Login getLoginFallBack(Exception e) {
-		return new Login("no user ID","no password");
-	}
 	
 	
-	@CircuitBreaker(name="register",fallbackMethod = "saveLoginFallback")
+	
+	@CircuitBreaker(name="login",fallbackMethod = "saveLoginFallback")
 	public Login saveLogin(String userId, String password) {
 		
 		return restTemplate.postForObject("http://login-service/logins", new Login(userId,password), Login.class);
 	}
 	
+	public Login getLoginFallBack(Exception e) {
+		return new Login("no user ID","no password");
+	}
 	public Login saveLoginFallback(Exception e) {
 		
-		return new Login(null,null);
+		return new Login("no user ID","no password");
 		
 	}
 	

@@ -3,13 +3,12 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Registering Patient</title>
-<link th:href="@{/styles/main.css}" rel="stylesheet">
+<link th:href="@{/styles/register.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Hospital management System</h1>
-<hr>
 <br>
 <h3>Patient Registration Form</h3>
+<div>
 <form action="/inputDetailsToRegisterPatient" method="post">
 	Enter Patient Name : <input type="text" name="pName" required="required" placeholder="Your Name"><br><br>
 	Enter Patient Age : <input type="number" name="pAge" required="required" placeholder="Your Age"><br><br>
@@ -22,12 +21,17 @@
 	Enter Patient Symptoms :<input type="text" name="pSymptom" required="required" placeholder="Symptoms/Disease"><br><br>
 	<input type="submit" value="Sign up">
 	<input type="reset" value="Reset Form">
-	
+
 </form>
+</div>
+
+
+<div>
 <br><br>
 <h3 th:text="${message}" style="color: red"></h3>
 <br>
 <br>
  <input type="button" value="Go back!" onclick="history.back()">
+ </div>
 </body>
 </html>
