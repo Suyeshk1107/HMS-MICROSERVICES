@@ -11,10 +11,10 @@
 <p>Patient Registration Form</p>
 <form action="/inputDetailsToRegisterPatient" method="post">
 	Enter Patient Name : <input type="text" name="pName" required="required" placeholder="Your Name"><br><br>
-	Enter Patient Age : <input type="number" name="pAge" required="required" placeholder="Your Age"><br><br>
+	Enter Patient Age : <input type="number" name="pAge" min="0" required="required" placeholder="Your Age"><br><br>
 	Enter Patient Gender : <select name="pGender" required="required" >
-	<option value="Male">M</option>
-	<option value="Female">F</option>
+	<option value="Male">Male</option>
+	<option value="Female">Female</option>
 	</select><br> <br>
 	Enter Patient Contact Number : <input type="tel" name="pContact" required="required" pattern="[0-9]{10}" placeholder="10 digit mobile number"><br><br>
 	Enter Patient Address : <input type="text" name="pAddress" required="required" placeholder="Your Address"><br><br>
