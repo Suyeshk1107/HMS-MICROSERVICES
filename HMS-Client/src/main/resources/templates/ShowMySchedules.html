@@ -3,11 +3,13 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Showing Schedules</title>
-
+<link th:href="@{/styles/showAllDoctors.css}" rel="stylesheet">
 </head>
 <body>
+<div>
 
 <h2>Schedule Details</h2>
+<center>
 <table border="1">
 	<tr>
 		<th>Doctor ID</th>
@@ -25,9 +27,10 @@
 		<td th:text="${schedule.slotEnd}"></td>
 		
 	</tr>
-</table>
+</table></center>
 <br> <br>
 <input type="button" value="Go back!" onclick="history.back()"><br><br>
 <a href="./">Go To Main Page</a>
+</div>
 </body>
 </html>

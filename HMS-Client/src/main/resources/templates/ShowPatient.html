@@ -3,12 +3,12 @@
 <head>
 <meta charset="ISO-8859-1">
 <title> Showing Patient Details </title>
-<link th:href="@{/styles/main.css}" rel="stylesheet">
+<link th:href="@{/styles/showPatient.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Hospital Management System</h1>
-<hr>
-<h3>Patient Profile</h3>
+<div>
+<h2>Patient Profile</h2>
+<center>
 <table border="1">
 	<tr>
 		<th>Patient ID</th>
@@ -27,8 +27,10 @@
 		<td th:text="${patient.patientSymptoms}"></td>
 	</tr>
 </table>
+</center>
 <br> <br>
  <input type="button" value="Go back!" onclick="history.back()"><br><br>
 <a href="./">Go To Main Page</a>
+</div>
 </body>
 </html>

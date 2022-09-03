@@ -3,17 +3,18 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Doctor Views</title>
-<link th:href="@{/styles/main.css}" rel="stylesheet">
+<link th:href="@{/styles/doctorAfterLogin.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Welcome to doctor page !!</h1>
+<div>
+<h2>Welcome to doctor page !!</h2>
 <br><br>
 <a href="/viewPatientEnterId">View patient profile</a><br><br>
 <a href="/showAppointment">Show my appointments</a><br><br>
-<a href="/viewSchedule">View Schedule</a><br><br>
-<a href="./">Go To Main Page</a>
-<br>
+<a href="/viewSchedule">View Schedule</a><br><br> <br>
+<a id="mainPage" href="./">Go To Main Page</a>
 <br>
 <input type="button" value="Go back!" onclick="history.back()">
+</div>
 </body>
 </html>

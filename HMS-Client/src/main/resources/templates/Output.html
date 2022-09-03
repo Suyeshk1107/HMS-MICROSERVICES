@@ -3,15 +3,16 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Output</title>
-<link th:href="@{/styles/main.css}" rel="stylesheet">
+<link th:href="@{/styles/output.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Hospital Management System</h1>
+<div>
 <h2 th:text="${message}"></h2>
 <br> <br>
-<a href="./">Go To Main Page</a>
+<a id="mainPage" href="./">Go To Main Page</a>
 <br>
 <br>
 	<input type="button" value="Go back!" onclick="history.back()">
+</div>
 </body>
 </html>

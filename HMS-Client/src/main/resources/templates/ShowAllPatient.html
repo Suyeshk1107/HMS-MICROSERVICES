@@ -3,11 +3,12 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>All Patient Data</title>
-<link th:href="@{/styles/main.css}" rel="stylesheet">
+<link th:href="@{/styles/showAllDoctors.css}" rel="stylesheet">
 </head>
 <body>
-
+<div>
 <h2>Patient Detail</h2>
+<center>
 <table border="1">
 	<tr>
 		<th>Patient ID</th>
@@ -26,10 +27,11 @@
 		<td th:text="${patientList.patientContact}"></td>
 		<td th:text="${patientList.patientSymptoms}"></td>
 	</tr>
-</table>
+</table></center>
 <br> <br>
 <a href="./">Go To Main Page</a>
 <br> <br>
  <input type="button" value="Go back!" onclick="history.back()"><br><br>
+</div>
 </body>
 </html>

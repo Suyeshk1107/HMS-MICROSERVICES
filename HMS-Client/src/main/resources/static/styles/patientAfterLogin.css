@@ -1,0 +1,59 @@
+@charset "ISO-8859-1";
+
+
+body {
+ 	background-image: url("main.png");
+ 	background-repeat: no-repeat;
+ 	background-size: cover;
+ 	background-color: #38444d;
+ 	font-family: verdana;
+	font-size: 100%;
+	
+}
+h2{
+	text-decoration:none;
+	color : white;
+	letter-spacing:3px;
+	word-spacing:12px;
+	line-height:50px;
+	text-shadow:3px 1px 10px aqua;
+	font-size: 45px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+div{
+	height : 500px;
+	width : 800px;
+	position:absolute;
+    top: 25%;
+    left: 25%;
+    text-align: center;
+    background: rgba(0,255,255,0.5);
+    background:rgba(42,185,219,0.7);
+  	border-radius:10px; 
+    box-shadow: 0px 1px 12px rgba(0, 0, 0, 0.5);
+    line-height:25px;
+    padding-top: 10px;
+   
+}
+a{
+	text-decoration:none;
+	color : white;
+	letter-spacing:2px;
+	
+	text-shadow:3px 1px 10px aqua;
+	font-size: 30px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+#mainPage{
+	font-size: 25px;
+}
+/*
+h1{
+	color:#92f906;
+}
+h3{
+	color:aqua;
+}
+*/

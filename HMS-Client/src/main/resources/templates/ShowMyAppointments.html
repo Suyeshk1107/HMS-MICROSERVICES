@@ -3,11 +3,11 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Showing Appointments</title>
-<link th:href="@{/styles/main.css}" rel="stylesheet">
-</head>
+<link th:href="@{/styles/showAllDoctors.css}" rel="stylesheet"></head>
 <body>
-
+<div>
 <h2>My Appointments</h2>
+<center>
 <table border="1">
 	<tr>
 		<th>Appointment ID</th>
@@ -29,9 +29,10 @@
 		<td th:text="${appointment.doctorName}"></td>
 		<td th:text="${appointment.department}"></td>
 	</tr>
-</table>
+</table></center>
 <br><br>
  <input type="button" value="Go back!" onclick="history.back()"><br><br>
 <a href="./">Go To Main Page</a>
+</div>
 </body>
 </html>
