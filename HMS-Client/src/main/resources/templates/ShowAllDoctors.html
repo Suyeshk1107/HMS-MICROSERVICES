@@ -3,11 +3,13 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Show all Doctors</title>
-<link th:href="@{/styles/main.css}" rel="stylesheet">
+<link th:href="@{/styles/showAllDoctors.css}" rel="stylesheet">
+<!-- <link rel="stylesheet" href="../static/styles/showAllDoctors.css"> -->
 </head>
 <body>
-
+<div class ="outer">
 <h2>Doctor Details</h2>
+<center>
 <table border="1">
 	<tr>
 		<th>Doctor ID</th>
@@ -20,7 +22,7 @@
 		<th>Address</th>
 		
 	</tr>
-	<tr>
+	<tr id="tr1">
 	<tr th:each="doctorList : ${doctorList}">
 	
 		<td th:text="${doctorList.doctorId}"></td>
@@ -34,10 +36,12 @@
 		
 	</tr>
 </table>
+</center>
 <br> <br>
 
 <a href="./">Go To Main Page</a>
 <br> <br>
  <input type="button" value="Go back!" onclick="history.back()"><br><br>
+</div>
 </body>
 </html>
