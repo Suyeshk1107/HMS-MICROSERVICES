@@ -3,13 +3,15 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Requesting Appointment</title>
-<link th:href="@{/styles/main.css}" rel="stylesheet">
+<link th:href="@{/styles/requestAppointmentPage.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Hospital Management System : </h1>
-<hr>
+<!-- 
+<h1>Hospital Management System : </h1> 
+<hr>-->
 <br><br>
-<h2>Request Appointment : </h2>
+<div class="form">
+<p>Request Appointment : </p>
 <form action="/generateAppointment" method="post">
   <label for="appointmentDate">Enter date for appointment :</label>
   <input type="date" id="appointmentDate" name="appointmentDate">
@@ -17,5 +19,6 @@
 </form>
 <br><br>
 <input type="button" value="Go back!" onclick="history.back()">
+</div>
 </body>
 </html>

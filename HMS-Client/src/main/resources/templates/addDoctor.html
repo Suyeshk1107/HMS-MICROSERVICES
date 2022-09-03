@@ -3,13 +3,15 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Adding Doctor </title>
-<link th:href="@{/styles/main.css}" rel="stylesheet">
+<link th:href="@{/styles/addDoctor.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Fill Doctor Details</h1>
+<div class="form">
+
+<p>Fill Doctor Details</p>
 <form action="/saveDoctor" method="post">
-	Enter Doctor Name : <input type="text" name="dName" required="required" placeholder="Docotr Name"><br><br>
-	Enter Doctor Age : <input type="number" name="dAge" min="1" required="required" placeholder="Docotr Age"><br><br>
+	Enter Doctor Name : <input type="text" name="dName" required="required" placeholder="Doctor Name"><br><br>
+	Enter Doctor Age : <input type="number" name="dAge" min="1" required="required" placeholder="Doctor Age"><br><br>
 	Enter Doctor Gender : <select name="dGender" required="required" >
 	<option value="Male">Male</option>
 	<option value="Female">Female</option>
@@ -27,7 +29,7 @@
 	<input type="submit" value="Register Doctor">
 </form>
 <br>
-<br>
 	<input type="button" value="Go back!" onclick="history.back()">
+</div>
 </body>
 </html>
