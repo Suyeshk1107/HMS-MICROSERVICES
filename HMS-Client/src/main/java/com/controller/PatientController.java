@@ -56,7 +56,7 @@ public class PatientController {
 				modelAndView.addObject("patient", patient);
 				modelAndView.setViewName("ShowPatient");
 			}else {
-				String message="Failed to reach patient-server. Please try again after some time.";
+				String message="Failed to reach patient service. Please try again after some time.";
 				modelAndView.addObject("message", message);
 				modelAndView.setViewName("Output");
 				
@@ -94,7 +94,7 @@ public class PatientController {
 			modelAndView.addObject("command3",new Schedule());
 			modelAndView.setViewName("ShowAvailableDoctorsSchedulePage");
 			}else {
-				String message="Failed to reach appointment service. Please try again after some time.";
+				String message="Failed to reach Schedule service. Please try again after some time.";
 				modelAndView.addObject("message", message);
 				modelAndView.setViewName("Output");
 			}

@@ -17,7 +17,7 @@ h2{
 	word-spacing:12px;
 	line-height:50px;
 	text-shadow:3px 1px 10px aqua;
-	font-size: 45px;
+	font-size: 35px;
 	font-weight: bold;
 	text-transform: uppercase;
 }
@@ -42,7 +42,7 @@ a{
 	letter-spacing:2px;
 	
 	text-shadow:3px 1px 10px aqua;
-	font-size: 30px;
+	font-size: 20px;
 	font-weight: bold;
 	text-transform: uppercase;
 }

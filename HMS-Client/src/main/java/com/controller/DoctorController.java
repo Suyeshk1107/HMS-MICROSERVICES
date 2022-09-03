@@ -48,7 +48,7 @@ public class DoctorController {
 				modelAndView.setViewName("ShowPatient");
 			}
 			else {
-				String message="couldn't reach the server, please try again after some time";
+				String message="Failed to reach the server, please try again after some time";
 				modelAndView.addObject("message", message);
 				modelAndView.setViewName("Output");
 			}
@@ -70,7 +70,7 @@ public class DoctorController {
 		List<Appointment> appointmentDoc = appointmentService.showAllAppointmentsByDoctorId(id).getAppointments();
 		if(appointmentDoc.isEmpty()) {
 			
-			message = "No appointments requested.";
+			message = "No appointments scheduled.";
 			modelAndView.addObject("message", message);
 			modelAndView.setViewName("Output");
 			return modelAndView;
@@ -80,7 +80,7 @@ public class DoctorController {
 			if(appointmentDoc.get(0).getDoctorId().equals(id)) {
 				return new ModelAndView("ShowMyAppointments", "myAppointmentList", appointmentDoc);
 			}else {
-				message="couldn't reach the server, please try again after some time";
+				message="Failed to reach the server, please try again after some time";
 				modelAndView.addObject("message", message);
 				modelAndView.setViewName("Output");
 				return modelAndView;
@@ -99,7 +99,7 @@ public class DoctorController {
 			modelAndView.addObject("schedule", schedule);
 			modelAndView.setViewName("ShowMySchedules");
 		}else {
-			String message="couldn't reach the server, please try again after some time";
+			String message="Failed to reach the server, please try again after some time";
 			modelAndView.addObject("message", message);
 			modelAndView.setViewName("Output");
 		}

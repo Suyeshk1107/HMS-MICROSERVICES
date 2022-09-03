@@ -10,14 +10,14 @@ body {
 	font-size: 100%;
 	
 }
-h2{
+p{
 	text-decoration:none;
 	color : white;
 	letter-spacing:3px;
 	word-spacing:12px;
 	line-height:40px;
 	text-shadow:3px 1px 10px aqua;
-	font-size: 45px;
+	font-size: 30px;
 	font-weight: bold;
 	text-transform: uppercase;
 }

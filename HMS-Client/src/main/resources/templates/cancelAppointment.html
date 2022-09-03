@@ -3,10 +3,13 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Cancelling Appointment </title>
-<link th:href="@{/styles/main.css}" rel="stylesheet">
+<link th:href="@{/styles/cancelAppointment.css}" rel="stylesheet">
 </head>
 <body>
+<div class = "table">
+
 <h2>Appointments </h2>
+<center>
 <table border="1">
 	<tr>
 		<th>Appointment ID</th>
@@ -29,14 +32,18 @@
 		<td th:text="${appointment.department}"></td>
 	</tr>
 </table>
+</center>
 <br><br>
-	
+</div>
+<div class="form">
+<br>
+<br>
 	<form action="/deleteAppointment" method="post">
 	Enter Appointment Id : <input type="text" name="appointmentId"><br><br>
 	<input type="submit" name="appointmentId" value="Delete">
 </form>
 <br>
-<br>
 <input type="button" value="Go back!" onclick="history.back()">
+</div>	
 </body>
 </html>

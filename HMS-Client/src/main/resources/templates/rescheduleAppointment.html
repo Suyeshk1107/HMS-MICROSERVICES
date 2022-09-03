@@ -3,9 +3,10 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Reschedule Appointment</title>
-<link th:href="@{/styles/main.css}" rel="stylesheet">
+<link th:href="@{/styles/rescheduleAppointment.css}" rel="stylesheet">
 </head>
 <body>
+<div class=table>
 <h2>Appointments </h2>
 <table border="1">
 	<tr>
@@ -29,15 +30,18 @@
 		<td th:text="${appointment.department}"></td>
 	</tr>
 </table>
+</div>
+<div class="form">
 <br><br>
 	
 	<form action="/rescheduleAppointmentTo" method="post">
 	Enter Appointment Id : <input type="text" name="appointmentId"><br><br>
   <label for="appointmentDate">Enter date for appointment :</label>
-  <input type="date" id="appointmentDate" name="appointmentDate">
+  <input type="date" id="appointmentDate" required="required" name="appointmentDate">
 	
 	<input type="submit" name="appointmentIdAndDate" value="Proceed">
-</form><br><br>
+</form><br>
 	 <input type="button" value="Go back!" onclick="history.back()">
+</div>
 </body>
 </html>
