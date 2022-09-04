@@ -24,9 +24,6 @@ public class LoginService {
 		return restTemplate.getForObject("http://login-service/logins/"+userId, Login.class);
 	}
 	
-	
-	
-	
 	@CircuitBreaker(name="login",fallbackMethod = "saveLoginFallback")
 	public Login saveLogin(String userId, String password) {
 		
@@ -42,11 +39,17 @@ public class LoginService {
 		
 	}
 	
-	@CircuitBreaker(name="deleteUser",fallbackMethod = "deleteLoginFallback")
-	public boolean deleteLogin(String userId) {
+	@CircuitBreaker(name="login",fallbackMethod = "deleteLoginFallback")
+	public Login deleteLogin(String userId) {
 
 		restTemplate.delete("http://login-service/logins/"+userId);
-		return false;
+		return restTemplate.getForObject("http://login-service/logins/"+userId, Login.class);
+	}
+	
+	public Login deleteLoginFallback(Exception e) {
+		
+		return new Login("no user ID","no password");
+		
 	}
 	
 }

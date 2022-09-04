@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bean.Doctor;
 import com.bean.DoctorList;
+import com.bean.Login;
 import com.bean.Patient;
 import com.bean.PatientList;
 import com.service.DoctorService;
@@ -78,9 +79,6 @@ public class AdminController {
 
 	@RequestMapping("/removeDoctorByID")
 	public ModelAndView removeDoctorByIdController() {
-//<<<<<<< HEAD
-//		return new ModelAndView("removeDoctor");
-//=======
 		ModelAndView modelAndView = new ModelAndView();
 		DoctorList doctorList = doctorService.showAllDoctor();
 		String message = null;
@@ -103,7 +101,6 @@ public class AdminController {
 		modelAndView.setViewName("Output");
 		return modelAndView;
 		}
-//>>>>>>> branch 'master' of https://github.com/krishna-kusum/HMS-in-Spring-JPA-.git
 	}
 	@RequestMapping("/removeDoctor")
 	public ModelAndView removeDoctorController(@ModelAttribute("command2") Doctor doctor) {
@@ -179,7 +176,7 @@ public class AdminController {
 		
 		PatientList pList = patientService.showAllPatient();
 		String message = null;
-		if (pList.getPatientList() != null) {
+		if (!pList.getPatientList().isEmpty()) {
 			if(pList.getPatientList().get(0).getPatientId().equals("no id")) {
 				message = "couldn't reach the server, please try again after some time";
 				modelAndView.addObject("message", message);
@@ -208,14 +205,21 @@ public class AdminController {
 		Patient pt = patientService.deletePatient(patient.getPatientId());
 		if (pt.getPatientId()==null) {
 			message = "Patient deleted Successfully";
-			loginService.deleteLogin(patient.getPatientId());
+			Login login = loginService.deleteLogin(patient.getPatientId());
+			if(login.getId()!=null) {
+				if(login.getId().equals("no User Id")) {
+					message = "Failed to reach login service. please try again after some time";
+				}else {
+					message = "Failed to delete login credentials. Please contact admin for further process.";
+				}
+			}
 			modelAndView.addObject("message", message);
 			modelAndView.setViewName("Output");
 			return modelAndView;
 		}
 		else {
 			if(patientService.deletePatient(patient.getPatientId()).getPatientId().equals("no id")) {
-				message = "couldn't reach the server, please try again after some time";
+				message = "Failed to reach the patient service, please try again after some time";
 				modelAndView.addObject("message", message);
 				modelAndView.setViewName("Output");
 				return modelAndView;

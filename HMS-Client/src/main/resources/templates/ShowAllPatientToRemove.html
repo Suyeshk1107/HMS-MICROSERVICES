@@ -3,11 +3,12 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>All Patient Data to remove patient</title>
-<link th:href="@{/styles/main.css}" rel="stylesheet">
+<link th:href="@{/styles/showAllPatientToRemove.css}" rel="stylesheet">
 </head>
 <body>
-
+<div class = "table">
 <h2>Patient Detail</h2>
+<center>
 <table border="1">
 	<tr>
 		<th>Patient ID</th>
@@ -27,16 +28,18 @@
 		<td th:text="${patientList.patientSymptoms}"></td>
 	</tr>
 </table>
-<br> <br>
+</center>
+</div>
+<div class="form">
+<br>
 <form action="#"  method="post" th:object="${command}" th:action="@{./removePatientMessage}">
-	Select Employee ID : <select th:field="*{patientId}">
+	Select Patient ID : <select th:field="*{patientId}">
 	<option th:each="id : ${patientIds}" th:value="${id}" th:label="${id}"></option>
-	</select><br><br>
+	</select><br>
 	<input type="submit" value="Delete Patient">
 </form>
-<br><br>
-<a href="./">Go To Main Page</a>
-<br> <br>
- <input type="button" value="Go back!" onclick="history.back()"><br><br>
+<br>
+ <input type="button" value="Go back!" onclick="history.back()">
+ </div>
 </body>
 </html>
