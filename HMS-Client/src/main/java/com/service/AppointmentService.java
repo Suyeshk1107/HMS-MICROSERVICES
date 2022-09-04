@@ -48,7 +48,7 @@ public class AppointmentService {
 	}
 	
 	@CircuitBreaker(name = "appointments",fallbackMethod ="showAppointmentByIdFallBack" )
-	public Appointment showAppointmentsById(String appointmentId) {
+	public Appointment showAppointmentsById(int appointmentId) {
 		return restTemplate.getForObject("http://appointment-service/appointments/"+appointmentId, Appointment.class);
 	}
 	public Appointment showAppointmentByIdFallBack(Exception e) {

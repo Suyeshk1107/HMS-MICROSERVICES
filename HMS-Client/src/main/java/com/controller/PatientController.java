@@ -275,8 +275,7 @@ public class PatientController {
 		int aid = Integer.parseInt(request.getParameter("appointmentId"));
 		Date appointmentDate =Date.valueOf(request.getParameter("appointmentDate"));
 		
-		Appointment appointment = new Appointment();
-		appointment.setAppointmentId(aid);
+		Appointment appointment = appointmentService.showAppointmentsById(aid);
 		appointment.setDate(appointmentDate);
 		Appointment newAppointment = appointmentService.modifyAppointment(appointment);
 		if(newAppointment !=null) {
