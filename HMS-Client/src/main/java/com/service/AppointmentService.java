@@ -90,7 +90,7 @@ public class AppointmentService {
 		return restTemplate.getForObject("http://appointment-service/appointments/"+appointment.getAppointmentId(), Appointment.class);
 	}
 	
-	public Appointment modifyAppointmentFallBack(Appointment appointment) {
+	public Appointment modifyAppointmentFallBack(Exception e) {
 		return new Appointment("no pID","no pName",Time.valueOf(LocalTime.now()), Date.valueOf(LocalDate.now()), "no dID", "no dName", "no department",0);
 	}
 	

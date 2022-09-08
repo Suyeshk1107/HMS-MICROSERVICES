@@ -18,38 +18,39 @@ public class LoginService {
 
 	@Autowired
 	private RestTemplate restTemplate;
-	
-	@CircuitBreaker(name = "login",fallbackMethod ="getLoginFallBack" )
+
+	@CircuitBreaker(name = "login", fallbackMethod = "getLoginFallBack")
 	public Login getLogin(String userId) {
-		return restTemplate.getForObject("http://login-service/logins/"+userId, Login.class);
+		return restTemplate.getForObject("http://login-service/logins/" + userId, Login.class);
 	}
-	
-	@CircuitBreaker(name="login",fallbackMethod = "saveLoginFallback")
+
+	@CircuitBreaker(name = "login", fallbackMethod = "saveLoginFallback")
 	public Login saveLogin(String userId, String password) {
-		
-		return restTemplate.postForObject("http://login-service/logins", new Login(userId,password), Login.class);
+
+		return restTemplate.postForObject("http://login-service/logins", new Login(userId, password), Login.class);
 	}
-	
+
 	public Login getLoginFallBack(Exception e) {
-		return new Login("no user ID","no password");
+		return new Login("no user ID", "no password");
 	}
+
 	public Login saveLoginFallback(Exception e) {
-		
-		return new Login("no user ID","no password");
-		
+
+		return new Login("no user ID", "no password");
+
 	}
-	
-	@CircuitBreaker(name="login",fallbackMethod = "deleteLoginFallback")
+
+	@CircuitBreaker(name = "login", fallbackMethod = "deleteLoginFallback")
 	public Login deleteLogin(String userId) {
 
-		restTemplate.delete("http://login-service/logins/"+userId);
-		return restTemplate.getForObject("http://login-service/logins/"+userId, Login.class);
+		restTemplate.delete("http://login-service/logins/" + userId);
+		return restTemplate.getForObject("http://login-service/logins/" + userId, Login.class);
 	}
-	
+
 	public Login deleteLoginFallback(Exception e) {
-		
-		return new Login("no user ID","no password");
-		
+
+		return new Login("no user ID", "no password");
+
 	}
-	
+
 }
