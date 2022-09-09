@@ -6,7 +6,6 @@ import java.sql.Time;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.MethodOrderer;
@@ -60,7 +59,7 @@ class ScheduleServiceApplicationTests {
 	@Test
 	public void testDeleteScheduleByDoctorId() {
 
-		Schedule schedule = new Schedule(1	,"D1000"	,"Dr Pullen"	,"Monday"	,Time.valueOf("10:00:00")	,Time.valueOf("12:00:00"));
+//		Schedule schedule = new Schedule(1	,"D1000"	,"Dr Pullen"	,"Monday"	,Time.valueOf("10:00:00")	,Time.valueOf("12:00:00"));
 		scheduleDao.deleteScheduleByDoctorId("D1000");
 		
 		assertEquals(null,scheduleDao.findByDoctorId("D1000"));
