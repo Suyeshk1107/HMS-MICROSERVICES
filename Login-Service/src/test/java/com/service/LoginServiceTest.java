@@ -54,15 +54,39 @@ class LoginServiceTest {
 		
 		assertEquals(dummy, loginService.getLoginById("D1000"));
 	}
+	@Test
+	void testGetLoginByIdNegative() {
+		
+		Login dummy = new Login(null,null);
+		Mockito.when(loginDao.findById("D1000")).thenReturn(Optional.of(dummy));
+		
+		assertEquals(dummy, loginService.getLoginById("D1000"));
+	}
 
 	@Test
 	void testSaveLogin() {
-		fail("Not yet implemented");
+
+		Login dummy = new Login("D1000","D1000");
+		Mockito.when(loginDao.save(dummy)).thenReturn(dummy);
+		assertEquals(dummy, loginService.saveLogin(dummy));
+		
+	}
+	@Test
+	void testSaveLoginNegative() {
+		
+		Login dummy = new Login("D1000","D1000");
+		Login dummy2 = new Login();
+		Mockito.when(loginDao.save(dummy)).thenReturn(dummy2);
+		assertEquals(dummy2, loginService.saveLogin(dummy));
+		
 	}
 
 	@Test
 	void testDeleteLogin() {
-		fail("Not yet implemented");
+//		fail("Not yet implemented");
+		Login dummy = new Login("D1000","D1000");
+		Mockito.when(loginDao.findById("D1000")).thenReturn(Optional.of(dummy));
+		assertEquals(dummy, loginService.deleteLogin("D1000"));
 	}
 
 }
