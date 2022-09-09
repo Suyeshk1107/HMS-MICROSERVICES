@@ -22,14 +22,15 @@ public class PatientServiceImpl implements PatientService {
 
 	@Override
 	public Patient addPatient(Patient patient) {
-		patient.setPatientId(setNewPatientId());
+		if(patient != null)
+			patient.setPatientId(setNewPatientId());
 		return patientDao.save(patient);
 	}
 
 	@Override
 	public Patient deletePatient(String patientId) {
 		Optional<Patient> patientOptional=patientDao.findById(patientId);
-		if(patientOptional.isPresent()) {
+		if(patientOptional !=null && patientOptional.isPresent()) {
 			patientDao.deleteById(patientId);
 			return patientOptional.get();
 		}
@@ -49,7 +50,9 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public String getLastPatientId() {
 		Patient patient = patientDao.findTopByOrderByPatientIdDesc();
-		return patient.getPatientId();
+		if(patient != null)
+			return patient.getPatientId();
+		return null;
 	}
 
 	@Override

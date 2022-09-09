@@ -22,7 +22,8 @@ public class DoctorServiceImpl implements DoctorService {
 
 	@Override
 	public Doctor addDoctor(Doctor doctor) {
-		doctor.setDoctorId(setDoctorId());		
+		if(doctor != null)
+			doctor.setDoctorId(setDoctorId());		
 		return doctorDao.save(doctor);
 	}
 
@@ -49,7 +50,10 @@ public class DoctorServiceImpl implements DoctorService {
 	@Override
 	public String getLastDoctorId() {
 		Doctor doctor = doctorDao.findTopByOrderByDoctorIdDesc();
-		return doctor.getDoctorId();
+		
+		if(doctor != null)
+			return doctor.getDoctorId();
+		return null;
 	}
 
 	@Override
@@ -60,7 +64,7 @@ public class DoctorServiceImpl implements DoctorService {
 			id++;
 			return ("D"+id);
 		}else
-			return "D101";
+			return "D1000";
 	}
 
 }
