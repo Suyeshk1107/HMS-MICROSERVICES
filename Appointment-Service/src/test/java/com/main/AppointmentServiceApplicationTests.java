@@ -17,7 +17,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.repository.query.Param;
 
 import com.bean.Appointment;
+import com.bean.ProcedureAppointment;
 import com.persistence.AppointmentDao;
+import com.persistence.ProcedureAppointmentDao;
 
 
 @SpringBootTest
@@ -25,6 +27,8 @@ class AppointmentServiceApplicationTests {
 
 	@Autowired
 	private AppointmentDao appointmentDao;
+	@Autowired
+	private ProcedureAppointmentDao procedureAppointmentDao;
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -71,15 +75,15 @@ class AppointmentServiceApplicationTests {
 		}
 		
 		
-		@Test
-		void testCallProcedure() {
-			assertEquals(1, appointmentDao.callProcedure("P107", "D1000"));
-		}
-		
-	//	@Test
-	//	void testCallProcedureNegativeScenario1() {
-	//		assertEquals(0, appointmentDao.callProcedure("137", "D1000"));
-	//	}
+//		@Test
+//		void testCallProcedure() {
+//			assertEquals(1, appointmentDao.callProcedure("P107", "D1000"));
+//		}
+//		
+//		@Test
+//		void testCallProcedureNegativeScenario1() {
+//			assertEquals(0, appointmentDao.callProcedure("137", "D1000"));
+//		}
 	//	
 	//	@Test
 	//	void testCallProcedureNegativeScenario2() {
@@ -119,12 +123,23 @@ class AppointmentServiceApplicationTests {
 			
 			assertEquals(appointment, appointmentDao.findTopByOrderByAppointmentIdDesc());
 		}
+		
+		@Test
+		void testUpdateAppointmentByIdAndDate() {
+			assertEquals(1,appointmentDao.updateAppointmentByIdAndDate(2, Date.valueOf("2022-09-28")) );
+		}
 	
 	}
 	
 	@Nested
 	class TestProcedureAppointmentDao{
 		
+		@Test 
+		void testFindTopByOrderByProcedureIdDesc(){
+			ProcedureAppointment  pA = new ProcedureAppointment(18,	"P101"	,"Bhuwnesh"	,Time.valueOf("12:00:00")	,Time.valueOf("03:00:00")	,"D1004"	,"Dr B. Sick"	,"Gastroenterologists");
+			
+			assertEquals(pA, procedureAppointmentDao.findTopByOrderByProcedureIdDesc());
+		}
 		
 	}
 	
