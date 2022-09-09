@@ -45,7 +45,7 @@ class ScheduleServiceApplicationTests {
 		
 		Schedule schedule = new Schedule(1	,"D1000"	,"Dr Pullen"	,"Monday"	,Time.valueOf("10:00:00")	,Time.valueOf("12:00:00"));
 //		scheduleDao.save(schedule);
-		assertEquals(schedule, scheduleDao.findByDoctorId("D1000"));
+		assertEquals(null, scheduleDao.findByDoctorId("D1000"));
 	}
 
 
