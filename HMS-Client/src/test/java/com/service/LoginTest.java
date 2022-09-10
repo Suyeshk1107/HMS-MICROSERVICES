@@ -46,21 +46,23 @@ class LoginTest {
 	void tearDown() throws Exception {
 	}
 
+	
 //	@Test
 //	void testGetLogin() {
-////		fail("Not yet implemented");
+//		fail("Not yet implemented");
 //		loginService.getLogin("D1000");
 //	}
-//
+
 //	@Test
 //	void testSaveLogin() {
 //		fail("Not yet implemented");
 //	}
-//
+
 //	@Test
 //	void testDeleteLogin() {
 //		fail("Not yet implemented");
 //	}
+	
 	
 	@Nested
 	class TestGetLogin{
@@ -76,7 +78,66 @@ class LoginTest {
 			
 		}
 		
+		@Test
+		void testGetLogin_T002() {
+			Login login = new Login();
+			
+			Mockito.when(restTemplate.getForObject("http://login-service/logins/" + "D123", Login.class )).thenReturn(login);
+			
+			assertEquals(login, loginService.getLogin("D123"));
+		}
 		
 	}
+	
+	@Nested
+	class TestSaveLogin{
+		
+		@Test
+		void testSaveLogin_T001() {
+			
+			Login login = new Login("D1000","D1000");
+			
+			Mockito.when(restTemplate.postForObject("http://login-service/logins", new Login("D1000", "D1000"), Login.class)).thenReturn(login);
+			
+			assertEquals(login, loginService.saveLogin("D1000","D1000"));
+			
+		}
+		
+		@Test
+		void testSaveLogin_T002() {
+			
+			Login login = new Login();
+			
+			Mockito.when(restTemplate.postForObject("http://login-service/logins", new Login(null, null), Login.class)).thenReturn(login);
+			
+			assertEquals(login, loginService.saveLogin(null,null));
+		}
+		
+	}
+	
+	@Nested
+	class TestDeleteLogin{
+		
+		@Test
+		void testDeleteLogin_T001() {
+			Login login = new Login("D1000","D1000");
+			
+			Mockito.when(restTemplate.getForObject("http://login-service/logins/" + "D1000", Login.class )).thenReturn(login);
+			
+			assertEquals(login, loginService.deleteLogin("D1000"));
+		}
+		
+		@Test
+		void testDeleteLogin_T002() {
+			Login login = new Login();
+			
+			Mockito.when(restTemplate.getForObject("http://login-service/logins/" + "D123", Login.class )).thenReturn(login);
+			
+			assertEquals(login, loginService.deleteLogin("D123"));
+		}
+		
+	}
+	
+	
 
 }
