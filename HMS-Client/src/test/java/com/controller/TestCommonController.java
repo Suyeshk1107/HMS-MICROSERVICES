@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.web.ModelAndViewAssert;
+import org.springframework.test.web.ModelAndViewAssert.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -32,19 +34,26 @@ class TestCommonController {
 	void tearDown() throws Exception {
 	}
 
-	@Nested
-	class TestHomePageController{
-		
-		@Test
-		void testHomePageController() {
-			ModelAndView modelView = new ModelAndView("index");
-//			Mockito.when()
-//			assertInstanceOf(ModelAndView.class, commonController.homePageController());
-//			assertNotNull(commonController.homePageController());
-			assertEquals(modelView.getViewName(), commonController.homePageController().getViewName());
-		}
-		
-		
+	@Test
+	void testHomePageController() {
+		ModelAndView modelView = new ModelAndView("index");
+
+//		ModelAndViewAssert.assertViewName(commonController.homePageController(),"index");
+		assertEquals(modelView.getViewName(), commonController.homePageController().getViewName());
+	}
+	
+	@Test
+	void testRegisterPageController() {
+		assertEquals("patientRegister",commonController.registerPageController().getViewName());
 	}
 
+	@Test
+	void testBeforeLoginController() {
+		assertEquals("beforeLogin",commonController.beforeLoginController().getViewName());
+	}
+	
+	@Test
+	void testLoginPageController() {
+		assertEquals("login", commonController.loginPageController().getViewName());
+	}
 }

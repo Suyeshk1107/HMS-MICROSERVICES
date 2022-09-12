@@ -177,9 +177,11 @@ class PatientServiceTest {
 //		@Test // throws error
 //		void testSetNewPatientId_T001() {
 //			
-//			Mockito.when(patientService.getLastPatientId()).thenReturn("P101");
+//			Patient patient = new Patient("P101",	"Bhuwnesh",	"m",	24,	"9876987655",	"11, Welcome Shpg Centre, Old Padra Road, Old Padra Road"	,"Gastroenterologists");
+//			Mockito.when(patientDao.findTopByOrderByPatientIdDesc()).thenReturn(patient);
+//			Mockito.when(patientService.getLastPatientId()).thenReturn("P103");
 //			
-//			assertEquals("P102", patientService.setNewPatientId());
+//			assertEquals("P104", patientService.setNewPatientId());
 //		}
 		
 		@Test
