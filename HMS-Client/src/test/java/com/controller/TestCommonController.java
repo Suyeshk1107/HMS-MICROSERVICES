@@ -39,10 +39,9 @@ class TestCommonController {
 		void testHomePageController() {
 			ModelAndView modelView = new ModelAndView("index");
 //			Mockito.when()
-			assertInstanceOf(ModelAndView.class, commonController.homePageController());
+//			assertInstanceOf(ModelAndView.class, commonController.homePageController());
 //			assertNotNull(commonController.homePageController());
-			assertViewNa
-			ModelAndViewAssert
+			assertEquals(modelView.getViewName(), commonController.homePageController().getViewName());
 		}
 		
 		
