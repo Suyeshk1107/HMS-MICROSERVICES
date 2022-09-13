@@ -156,7 +156,7 @@ public class PatientController {
 	
 //	3. cancel appointment
 	@RequestMapping("/cancelAppointment")
-	public ModelAndView cancelAppointmentController(HttpServletRequest request, HttpSession session) {
+	public ModelAndView cancelAppointmentController(HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
 		
 		String userId = (String)session.getAttribute("userName");
@@ -170,7 +170,6 @@ public class PatientController {
 			modelAndView.addObject("appointmentList", appointments);
 			modelAndView.setViewName("cancelAppointment");
 			}else {
-
 				String message="Failed to reach appointment service. Please try again after some time.";
 				modelAndView.addObject("message", message);
 				modelAndView.setViewName("Output");
@@ -207,7 +206,7 @@ public class PatientController {
 	
 //	4. view all appointments
 	@RequestMapping("/viewAllAppointments")
-	public ModelAndView viewAllAppointmentsController(HttpServletRequest request, HttpSession session) {
+	public ModelAndView viewAllAppointmentsController( HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
 		
 		String pId = (String) session.getAttribute("userName");
@@ -215,7 +214,6 @@ public class PatientController {
 //				hmsClientService.showAllAppointmentsByPatientId(pId);
 		
 		
-//		may fail due to circuit breaker -- won't fail now
 		if(!appointments.isEmpty()) {
 			if(appointments.get(0).getPatientId().equals(pId)) {
 				
@@ -239,7 +237,7 @@ public class PatientController {
 	
 //	5. reschedule appointment
 	@RequestMapping("/rescheduleAppointment")
-	public ModelAndView rescheduleAppointmentController(HttpServletRequest request, HttpSession session) {
+	public ModelAndView rescheduleAppointmentController(HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
 		
 		String pId = (String) session.getAttribute("userName");

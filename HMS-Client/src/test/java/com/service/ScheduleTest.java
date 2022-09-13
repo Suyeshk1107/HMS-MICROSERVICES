@@ -53,7 +53,6 @@ class ScheduleTest {
 
 	@Test
 	void testShowAllSchedule() {
-//		fail("Not yet implemented");
 		
 		List<Schedule> schedules = new ArrayList<>();
 		schedules.add(new Schedule(1	,"D1000"	,"Dr Pullen"	,"Monday"	,Time.valueOf("10:00:00")	,Time.valueOf("12:00:00")));
@@ -64,7 +63,6 @@ class ScheduleTest {
 	}
 	@Test
 	void testShowAllScheduleNegative() {
-//		fail("Not yet implemented");
 		
 		List<Schedule> schedules = new ArrayList<>();
 		ScheduleList sList = new ScheduleList(schedules);
@@ -74,14 +72,12 @@ class ScheduleTest {
 
 	@Test
 	void testShowScheduleByDoctorId() {
-//		fail("Not yet implemented");
 		Schedule schedule = new Schedule(1	,"D1000"	,"Dr Pullen"	,"Monday"	,Time.valueOf("10:00:00")	,Time.valueOf("12:00:00"));
 		Mockito.when(restTemplate.getForObject("http://schedule-service/schedules/"+"D1000", Schedule.class)).thenReturn(schedule);
 		assertEquals(schedule,scheduleService.showScheduleByDoctorId("D1000"));
 	}
 	@Test
 	void testShowScheduleByDoctorIdNegative() {
-//		fail("Not yet implemented");
 		Schedule schedule = new Schedule();
 		Mockito.when(restTemplate.getForObject("http://schedule-service/schedules/"+"D10000", Schedule.class)).thenReturn(schedule);
 		assertEquals(schedule,scheduleService.showScheduleByDoctorId("D10000"));
@@ -89,7 +85,6 @@ class ScheduleTest {
 
 	@Test
 	void testShowAvailableDoctorSchedule() {
-//		fail("Not yet implemented");
 		List<Schedule> s = new ArrayList<>();
 		Schedule schedule = new Schedule(1	,"D1000"	,"Dr Pullen"	,"Monday"	,Time.valueOf("10:00:00")	,Time.valueOf("12:00:00"));
 		s.add(schedule);
@@ -99,7 +94,6 @@ class ScheduleTest {
 	}
 	@Test
 	void testShowAvailableDoctorScheduleNegative() {
-//		fail("Not yet implemented");
 		List<Schedule> s = new ArrayList<>();
 		Schedule schedule = new Schedule();
 		s.add(schedule);
@@ -110,7 +104,6 @@ class ScheduleTest {
 
 	@Test
 	void testDeleteSchedule() {
-//		fail("Not yet implemented");
 		Schedule schedule = new Schedule(1	,"D1000"	,"Dr Pullen"	,"Monday"	,Time.valueOf("10:00:00")	,Time.valueOf("12:00:00"));
 		restTemplate.delete("http://schedule-service/schedules/"+"D1000");
 		Mockito.when(restTemplate.getForObject("http://schedule-service/schedules/"+"D1000", Schedule.class)).thenReturn(schedule);
